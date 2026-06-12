@@ -1,25 +1,224 @@
 {
   "nodes": [
-    { "id": "start", "type": "start", "data": { "label": "Start" }, "position": { "x": 207, "y": 0 } },
-    { "id": "receive_request", "type": "task", "data": { "label": "Receive Request" }, "position": { "x": 175, "y": 80 } },
-    { "id": "validate_request", "type": "task", "data": { "label": "Validate Request", "background": "purple" }, "position": { "x": 175, "y": 190 } },
-    { "id": "approved", "type": "gateway", "data": { "label": "Approved?", "background": "yellow" }, "position": { "x": 194, "y": 300 } },
-    { "id": "request_revision", "type": "task", "data": { "label": "Request Revision", "background": "rose" }, "position": { "x": 5, "y": 480 } },
-    { "id": "end_no", "type": "end", "data": { "label": "End" }, "position": { "x": 40, "y": 590 } },
-    { "id": "process_order", "type": "task", "data": { "label": "Process Order" }, "position": { "x": 345, "y": 480 } },
-    { "id": "send_confirmation", "type": "task", "data": { "label": "Send Confirmation" }, "position": { "x": 330, "y": 590 } },
-    { "id": "end_yes", "type": "end", "data": { "label": "End" }, "position": { "x": 380, "y": 700 } },
-    { "id": "annotation_1", "type": "text", "data": { "label": "This flow describes the end-to-end request approval process from submission through validation to final order confirmation and notification.", "color": "yellow" }, "position": { "x": -300, "y": 80 } },
-    { "id": "card_1", "type": "card", "data": { "title": "Review Request", "content": "Verify all attached documents meet compliance requirements before proceeding." }, "position": { "x": 550, "y": 300 } }
+    {
+      "id": "start",
+      "type": "start",
+      "data": {
+        "label": "Start"
+      },
+      "position": {
+        "x": 187.76670607419805,
+        "y": -51.59350632326653
+      },
+      "width": 81,
+      "height": 81
+    },
+    {
+      "id": "receive_request",
+      "type": "task",
+      "data": {
+        "label": "Receive Request"
+      },
+      "position": {
+        "x": 149.44234691923512,
+        "y": 72.23662639212436
+      }
+    },
+    {
+      "id": "validate_request",
+      "type": "task",
+      "data": {
+        "label": "Validate Request",
+        "background": "purple"
+      },
+      "position": {
+        "x": 149.01087692120618,
+        "y": 170.2656487143037
+      }
+    },
+    {
+      "id": "approved",
+      "type": "gateway",
+      "data": {
+        "label": "Approved?",
+        "background": "yellow"
+      },
+      "position": {
+        "x": 194,
+        "y": 300
+      }
+    },
+    {
+      "id": "request_revision",
+      "type": "task",
+      "data": {
+        "label": "Request Revision",
+        "background": "rose"
+      },
+      "position": {
+        "x": 5,
+        "y": 480
+      }
+    },
+    {
+      "id": "end_no",
+      "type": "end",
+      "data": {
+        "label": "End"
+      },
+      "position": {
+        "x": 9.670166102012736,
+        "y": 622.9374104448641
+      }
+    },
+    {
+      "id": "process_order",
+      "type": "task",
+      "data": {
+        "label": "Process Order"
+      },
+      "position": {
+        "x": 341.60133825667333,
+        "y": 477.9608029540039
+      }
+    },
+    {
+      "id": "send_confirmation",
+      "type": "task",
+      "data": {
+        "label": "Send Confirmation"
+      },
+      "position": {
+        "x": 253.83217073198423,
+        "y": 607.7724934958703
+      }
+    },
+    {
+      "id": "end_yes",
+      "type": "end",
+      "data": {
+        "label": "End"
+      },
+      "position": {
+        "x": 353.5127396718913,
+        "y": 702.0243170801845
+      }
+    },
+    {
+      "id": "annotation_1",
+      "type": "text",
+      "data": {
+        "label": "This flow describes the end-to-end request approval process from submission through validation to final order confirmation and notification.",
+        "color": "yellow"
+      },
+      "position": {
+        "x": 461.1293750299411,
+        "y": 141.36372025999668
+      },
+      "width": 240,
+      "height": 97
+    },
+    {
+      "id": "card_1",
+      "type": "card",
+      "data": {
+        "title": "Review Request",
+        "content": "Verify all attached documents meet compliance requirements before proceeding."
+      },
+      "position": {
+        "x": 645.959793814433,
+        "y": 393.25670103092784
+      },
+      "width": 259,
+      "height": 114
+    }
   ],
   "edges": [
-    { "id": "e1", "source": "start", "target": "receive_request", "markerEnd": { "type": "arrowclosed" } },
-    { "id": "e2", "source": "receive_request", "target": "validate_request", "markerEnd": { "type": "arrowclosed" } },
-    { "id": "e3", "source": "validate_request", "target": "approved", "markerEnd": { "type": "arrowclosed" } },
-    { "id": "e4", "source": "approved", "target": "request_revision", "type": "smoothstep", "animated": true, "markerEnd": { "type": "arrowclosed" } },
-    { "id": "e5", "source": "request_revision", "target": "end_no", "markerEnd": { "type": "arrowclosed" } },
-    { "id": "e6", "source": "approved", "sourceHandle": "yes", "target": "process_order", "label": "Yes", "type": "smoothstep", "markerEnd": { "type": "arrowclosed" } },
-    { "id": "e7", "source": "process_order", "target": "send_confirmation", "markerEnd": { "type": "arrowclosed" } },
-    { "id": "e8", "source": "send_confirmation", "target": "end_yes", "markerEnd": { "type": "arrowclosed" } }
+    {
+      "id": "e1",
+      "source": "start",
+      "target": "receive_request",
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "e2",
+      "source": "receive_request",
+      "target": "validate_request",
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "e3",
+      "source": "validate_request",
+      "target": "approved",
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "e4",
+      "source": "approved",
+      "target": "request_revision",
+      "type": "smoothstep",
+      "label": "no",
+      "animated": true,
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "e5",
+      "source": "request_revision",
+      "target": "end_no",
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "e6",
+      "source": "approved",
+      "target": "process_order",
+      "sourceHandle": "yes",
+      "type": "smoothstep",
+      "label": "Yes",
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "e7",
+      "source": "process_order",
+      "target": "send_confirmation",
+      "type": "smoothstep",
+      "animated": true,
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "e8",
+      "source": "send_confirmation",
+      "target": "end_yes",
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__process_order-card_1",
+      "source": "process_order",
+      "target": "card_1",
+      "type": "step",
+      "label": "processing",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    }
   ]
 }
