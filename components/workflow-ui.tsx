@@ -1,31 +1,32 @@
 "use client"
 
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import {
   Background,
   ReactFlow,
   useNodesState,
   useEdgesState,
   addEdge,
-  Handle,
-  Position,
-  type NodeProps,
   type Connection,
 } from '@xyflow/react';
+import { StartNode } from './nodes/start-node';
+import { EndNode } from './nodes/end-node';
+import { TaskNode } from './nodes/task-node';
+import { GatewayNode } from './nodes/gateway-node';
+import workflow from '../data/request-approval-flow.json';
 
-const initialNodes = [
-  {
-    id: '0',
-    type: 'input',
-    data: { label: 'Node' },
-    position: { x: 0, y: 50 },
-  },
-];
+const nodeTypes = {
+  start: StartNode,
+  end: EndNode,
+  task: TaskNode,
+  gateway: GatewayNode,
+}
+
+const { nodes: initialNodes, edges: initialEdges } = workflow
 
 export function WorkflowUI() {
-  const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const onConnect = useCallback(
     (connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
@@ -33,19 +34,20 @@ export function WorkflowUI() {
   );
 
   return (
-    <div className="wrapper" ref={reactFlowWrapper}>
+    <div className="wrapper">
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         fitView
-        fitViewOptions={{ padding: 2 }}
+        fitViewOptions={{ padding: 0.2 }}
         colorMode="system"
       >
         <Background />
       </ReactFlow>
     </div>
-  );
+  )
 }

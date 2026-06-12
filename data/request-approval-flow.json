@@ -1,0 +1,23 @@
+{
+  "nodes": [
+    { "id": "start", "type": "start", "data": { "label": "Start" }, "position": { "x": 207, "y": 0 } },
+    { "id": "receive_request", "type": "task", "data": { "label": "Receive Request" }, "position": { "x": 175, "y": 80 } },
+    { "id": "validate_request", "type": "task", "data": { "label": "Validate Request" }, "position": { "x": 175, "y": 190 } },
+    { "id": "approved", "type": "gateway", "data": { "label": "Approved?" }, "position": { "x": 194, "y": 300 } },
+    { "id": "request_revision", "type": "task", "data": { "label": "Request Revision" }, "position": { "x": 5, "y": 480 } },
+    { "id": "end_no", "type": "end", "data": { "label": "End" }, "position": { "x": 40, "y": 590 } },
+    { "id": "process_order", "type": "task", "data": { "label": "Process Order" }, "position": { "x": 345, "y": 480 } },
+    { "id": "send_confirmation", "type": "task", "data": { "label": "Send Confirmation" }, "position": { "x": 330, "y": 590 } },
+    { "id": "end_yes", "type": "end", "data": { "label": "End" }, "position": { "x": 380, "y": 700 } }
+  ],
+  "edges": [
+    { "id": "e1", "source": "start", "target": "receive_request" },
+    { "id": "e2", "source": "receive_request", "target": "validate_request" },
+    { "id": "e3", "source": "validate_request", "target": "approved" },
+    { "id": "e4", "source": "approved", "sourceHandle": "no", "target": "request_revision", "label": "No", "type": "smoothstep" },
+    { "id": "e5", "source": "request_revision", "target": "end_no" },
+    { "id": "e6", "source": "approved", "sourceHandle": "yes", "target": "process_order", "label": "Yes", "type": "smoothstep" },
+    { "id": "e7", "source": "process_order", "target": "send_confirmation" },
+    { "id": "e8", "source": "send_confirmation", "target": "end_yes" }
+  ]
+}
