@@ -8,6 +8,8 @@ import {
   useEdgesState,
   addEdge,
   type Connection,
+  type Node,
+  type Edge,
 } from '@xyflow/react';
 import { StartNode } from './nodes/start-node';
 import { EndNode } from './nodes/end-node';
@@ -23,7 +25,8 @@ const nodeTypes = {
   gateway: GatewayNode,
 }
 
-const { nodes: initialNodes, edges: initialEdges } = requestApprovalFlow
+const initialNodes = requestApprovalFlow.nodes as Node[]
+const initialEdges = requestApprovalFlow.edges as Edge[]
 
 export function WorkflowUI() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
