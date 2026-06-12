@@ -9,7 +9,7 @@
     { "id": "process_order", "type": "task", "data": { "label": "Process Order" }, "position": { "x": 345, "y": 480 } },
     { "id": "send_confirmation", "type": "task", "data": { "label": "Send Confirmation" }, "position": { "x": 330, "y": 590 } },
     { "id": "end_yes", "type": "end", "data": { "label": "End" }, "position": { "x": 380, "y": 700 } },
-    { "id": "annotation_1", "type": "text", "data": { "label": "This flow describes the end-to-end request approval process from submission through validation to final order confirmation and notification.", "color": "purple", "fontSize": "20px" }, "position": { "x": -80, "y": 0 } }
+    { "id": "annotation_1", "type": "text", "data": { "label": "This flow describes the end-to-end request approval process from submission through validation to final order confirmation and notification.", "color": "yellow", "fontSize": "20px" }, "position": { "x": -80, "y": 0 } }
   ],
   "edges": [
     { "id": "e1", "source": "start", "target": "receive_request", "markerEnd": { "type": "arrowclosed" } },
