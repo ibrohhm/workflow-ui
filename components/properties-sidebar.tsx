@@ -12,7 +12,7 @@ import {
 } from '@/components/sidebar-icons';
 import {
   T,
-  Sep, SwatchSection, OptionSection, Swatch, OptionButton,
+  Sep, SwatchSection, OptionSection, Swatch, OptionButton, FieldLabel,
 } from '@/components/sidebar-components';
 
 interface PropertiesSidebarProps {
@@ -199,6 +199,21 @@ export function PropertiesSidebar({
                   </div>
                 ))}
               </div>
+            </div>
+            <div className="px-3 pb-3">
+              <FieldLabel>Label</FieldLabel>
+              <input
+                type="text"
+                value={(selectedEdge.label as string) ?? ''}
+                placeholder="Add label…"
+                onChange={e => onEdgeChange(selectedEdge.id, { label: e.target.value || undefined })}
+                className="w-full text-[11px] px-2 py-1 rounded-md outline-none"
+                style={{
+                  backgroundColor: T.hover,
+                  border: `1px solid ${T.border}`,
+                  color: T.text,
+                }}
+              />
             </div>
             <Sep />
             <OptionSection label="Line type">

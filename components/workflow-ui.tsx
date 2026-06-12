@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef } from 'react';
 import {
   Background,
   ReactFlow,
@@ -83,6 +83,34 @@ export function WorkflowUI() {
     setSelectedEdgeId(null);
   }, []);
 
+  const [copyLabel, setCopyLabel] = useState('Copy JSON');
+  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleCopySchema = useCallback(() => {
+    const schema = {
+      nodes: nodes.map(({ id, type, data, position, width, height, style }) => ({
+        id, type, data, position,
+        ...(width  != null ? { width }  : style?.width  != null ? { width:  style.width  } : {}),
+        ...(height != null ? { height } : style?.height != null ? { height: style.height } : {}),
+      })),
+      edges: edges.map(({ id, source, target, sourceHandle, targetHandle, type, label, animated, style, markerEnd, markerStart }) => ({
+        id, source, target,
+        ...(sourceHandle != null ? { sourceHandle } : {}),
+        ...(targetHandle != null ? { targetHandle } : {}),
+        ...(type        != null ? { type }        : {}),
+        ...(label       != null ? { label }       : {}),
+        ...(animated    != null ? { animated }    : {}),
+        ...(style       != null ? { style }       : {}),
+        ...(markerEnd   != null ? { markerEnd }   : {}),
+        ...(markerStart != null ? { markerStart } : {}),
+      })),
+    };
+    navigator.clipboard.writeText(JSON.stringify(schema, null, 2));
+    setCopyLabel('Copied!');
+    if (copyTimer.current) clearTimeout(copyTimer.current);
+    copyTimer.current = setTimeout(() => setCopyLabel('Copy JSON'), 2000);
+  }, [nodes, edges]);
+
   return (
     <div className="wrapper relative">
       <ReactFlow
@@ -101,6 +129,17 @@ export function WorkflowUI() {
       >
         <Background />
       </ReactFlow>
+      <button
+        onClick={handleCopySchema}
+        className="fixed bottom-4 right-4 z-20 text-[11px] font-medium px-3 py-1.5 rounded-lg transition-colors duration-150"
+        style={{
+          backgroundColor: 'oklch(0.16 0.01 265)',
+          color: 'oklch(0.97 0.003 265)',
+          boxShadow: '0 2px 8px oklch(0.15 0.02 265 / 0.2)',
+        }}
+      >
+        {copyLabel}
+      </button>
       <PropertiesSidebar
         selectedNode={selectedNode}
         selectedEdge={selectedEdge}
