@@ -2,7 +2,7 @@
   "nodes": [
     { "id": "start", "type": "start", "data": { "label": "Start" }, "position": { "x": 207, "y": 0 } },
     { "id": "receive_request", "type": "task", "data": { "label": "Receive Request" }, "position": { "x": 175, "y": 80 } },
-    { "id": "validate_request", "type": "task", "data": { "label": "Validate Request" }, "position": { "x": 175, "y": 190 } },
+    { "id": "validate_request", "type": "task", "data": { "label": "Validate Request", "background": "purple" }, "position": { "x": 175, "y": 190 } },
     { "id": "approved", "type": "gateway", "data": { "label": "Approved?", "background": "yellow" }, "position": { "x": 194, "y": 300 } },
     { "id": "request_revision", "type": "task", "data": { "label": "Request Revision", "background": "pink" }, "position": { "x": 5, "y": 480 } },
     { "id": "end_no", "type": "end", "data": { "label": "End" }, "position": { "x": 40, "y": 590 } },
