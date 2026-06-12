@@ -13,7 +13,8 @@ import { StartNode } from './nodes/start-node';
 import { EndNode } from './nodes/end-node';
 import { TaskNode } from './nodes/task-node';
 import { GatewayNode } from './nodes/gateway-node';
-import workflow from '../data/request-approval-flow.json';
+import simpleFlow from '../data/simple-flow.json';
+import requestApprovalFlow from '../data/request-approval-flow.json';
 
 const nodeTypes = {
   start: StartNode,
@@ -22,7 +23,7 @@ const nodeTypes = {
   gateway: GatewayNode,
 }
 
-const { nodes: initialNodes, edges: initialEdges } = workflow
+const { nodes: initialNodes, edges: initialEdges } = requestApprovalFlow
 
 export function WorkflowUI() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);

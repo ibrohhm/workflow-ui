@@ -1,0 +1,11 @@
+{
+  "nodes": [
+    { "id": "start", "type": "start", "data": { "label": "Start" }, "position": { "x": 175, "y": 0 } },
+    { "id": "process", "type": "task", "data": { "label": "Process" }, "position": { "x": 150, "y": 100 } },
+    { "id": "end", "type": "end", "data": { "label": "End" }, "position": { "x": 175, "y": 200 } }
+  ],
+  "edges": [
+    { "id": "e1", "source": "start", "target": "process" },
+    { "id": "e2", "source": "process", "target": "end" }
+  ]
+}

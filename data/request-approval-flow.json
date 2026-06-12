@@ -14,7 +14,7 @@
     { "id": "e1", "source": "start", "target": "receive_request" },
     { "id": "e2", "source": "receive_request", "target": "validate_request" },
     { "id": "e3", "source": "validate_request", "target": "approved" },
-    { "id": "e4", "source": "approved", "sourceHandle": "no", "target": "request_revision", "label": "No", "type": "smoothstep" },
+    { "id": "e4", "source": "approved", "target": "request_revision", "type": "smoothstep", "animated": true },
     { "id": "e5", "source": "request_revision", "target": "end_no" },
     { "id": "e6", "source": "approved", "sourceHandle": "yes", "target": "process_order", "label": "Yes", "type": "smoothstep" },
     { "id": "e7", "source": "process_order", "target": "send_confirmation" },
