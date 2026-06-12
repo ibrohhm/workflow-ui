@@ -1,15 +1,18 @@
 import { Handle, Position, type NodeProps } from '@xyflow/react';
+import { BaseNode } from './base-node';
 
 export function GatewayNode({ data }: NodeProps) {
   return (
-    <div className="relative flex h-12 w-12 items-center justify-center">
-      <div className="absolute inset-0 rotate-45 border border-gray-600 bg-white" />
-      <span className="relative z-10 text-center text-xs font-medium text-gray-700">
+    <BaseNode className="relative rotate-45 flex p-8 items-center justify-center text-xs font-medium overflow-visible">
+      <span className="absolute text-xs -rotate-45 font-medium text-center px-2">
         {data.label as string}
       </span>
-      <Handle type="target" position={Position.Top} />
-      <Handle type="source" position={Position.Left} id="no" />
-      <Handle type="source" position={Position.Right} id="yes" />
-    </div>
+      <Handle type="target" position={Position.Top}
+        style={{ left: 0, top: 0, transform: 'translate(-50%, -50%)' }} />
+      <Handle type="source" position={Position.Left} id="no"
+        style={{ top: 'auto', left: 0, bottom: 0, transform: 'translate(-50%, 50%)' }} />
+      <Handle type="source" position={Position.Right} id="yes"
+        style={{ right: 0, top: 0, transform: 'translate(50%, -50%)' }} />
+    </BaseNode>
   )
 }
