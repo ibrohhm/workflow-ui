@@ -139,6 +139,24 @@ export function PropertiesSidebar({
 
         {selectedNode && (
           <>
+            <div className="px-3 pt-3 pb-3">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+                {[
+                  { label: 'ID',   value: selectedNode.id },
+                  { label: 'Type', value: selectedNode.type ?? '—' },
+                  { label: 'X',    value: Math.round(selectedNode.position.x) },
+                  { label: 'Y',    value: Math.round(selectedNode.position.y) },
+                  { label: 'W',    value: selectedNode.measured?.width  ?? '—' },
+                  { label: 'H',    value: selectedNode.measured?.height ?? '—' },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex items-baseline gap-1.5 min-w-0">
+                    <span className="text-[9px] font-bold tracking-wider uppercase shrink-0" style={{ color: T.muted }}>{label}</span>
+                    <span className="text-[10px] font-mono truncate" style={{ color: T.text }} title={String(value)}>{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <Sep />
             {!isTextNode && (
               <>
                 <SwatchSection label="Background">
@@ -168,6 +186,21 @@ export function PropertiesSidebar({
 
         {selectedEdge && (
           <>
+            <div className="px-3 pt-3 pb-3">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+                {[
+                  { label: 'ID',     value: selectedEdge.id,     full: false },
+                  { label: 'Source', value: selectedEdge.source, full: true  },
+                  { label: 'Target', value: selectedEdge.target, full: true  },
+                ].map(({ label, value, full }) => (
+                  <div key={label} className={`flex items-baseline gap-1.5 min-w-0${full ? ' col-span-2' : ''}`}>
+                    <span className="text-[9px] font-bold tracking-wider uppercase shrink-0" style={{ color: T.muted }}>{label}</span>
+                    <span className="text-[10px] font-mono truncate" style={{ color: T.text }} title={String(value)}>{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <Sep />
             <OptionSection label="Line type">
               {LINE_TYPES.map(({ value, label, icon }) => (
                 <OptionButton key={value} icon={icon} label={label}
