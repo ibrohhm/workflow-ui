@@ -2,9 +2,9 @@ import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { COLORS } from '@/constants/colors';
 import { BaseNode } from './base-node';
 
-export function GatewayNode({ data }: NodeProps) {
+export function GatewayNode({ data, selected }: NodeProps) {
   return (
-    <BaseNode className="relative rotate-45 flex p-8 items-center justify-center text-xs font-medium overflow-visible" style={{ backgroundColor: COLORS[data.background as string] }}>
+    <BaseNode selected={selected} className="relative rotate-45 flex p-8 items-center justify-center text-xs font-medium overflow-visible" style={{ backgroundColor: COLORS[data.background as string] }}>
       <span className="absolute text-xs -rotate-45 font-medium text-center px-2">
         {data.label as string}
       </span>

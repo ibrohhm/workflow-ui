@@ -19,6 +19,6 @@ body {
 .react-flow__handle {
   width: 2px !important;
   height: 2px !important;
-  background: white !important;
-  border: 1px solid #374151 !important;
+  background-color: var(--card) !important;
+  border: 1px solid var(--border) !important;
 }

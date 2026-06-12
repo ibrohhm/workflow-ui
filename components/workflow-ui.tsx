@@ -15,6 +15,7 @@ import { StartNode } from './nodes/start-node';
 import { EndNode } from './nodes/end-node';
 import { TaskNode } from './nodes/task-node';
 import { GatewayNode } from './nodes/gateway-node';
+import { TextNode } from './nodes/text-node';
 import simpleFlow from '../data/simple-flow.json';
 import requestApprovalFlow from '../data/request-approval-flow.json';
 
@@ -23,6 +24,7 @@ const nodeTypes = {
   end: EndNode,
   task: TaskNode,
   gateway: GatewayNode,
+  text: TextNode,
 }
 
 const initialNodes = requestApprovalFlow.nodes as Node[]
