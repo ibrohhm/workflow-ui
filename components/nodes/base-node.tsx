@@ -19,19 +19,21 @@ export function BaseNode({ className, style, children, selected, keepAspectRatio
         maxWidth={400}
         maxHeight={400}
         keepAspectRatio={keepAspectRatio}
-        color="var(--ring)"
-        handleStyle={{ width: 7, height: 7, borderRadius: 2 }}
+        color="var(--border)"
+        handleStyle={{ width: 10, height: 10, borderRadius: 2 }}
       />
-      <div
-        className={cn(
-          'border border-border bg-card rounded-sm',
-          'shadow-xs transition-shadow duration-150 ease-out',
-          'hover:shadow-sm',
-          className,
-        )}
-        style={style}
-      >
-        {children}
+      <div className="w-full h-full p-1">
+        <div
+          className={cn(
+            'w-full h-full border border-border bg-card rounded-sm',
+            'shadow-xs transition-shadow duration-150 ease-out',
+            'hover:shadow-sm',
+            className,
+          )}
+          style={style}
+        >
+          {children}
+        </div>
       </div>
     </>
   )

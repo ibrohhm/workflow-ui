@@ -12,17 +12,19 @@ export function TextNode({ data, selected }: NodeProps) {
         color="var(--ring)"
         handleStyle={{ width: 7, height: 7, borderRadius: 2 }}
       />
-      <div
-        className="leading-snug break-words overflow-hidden"
-        style={{
-          width: '100%',
-          height: '100%',
-          maxWidth: 500,
-          color: TEXT_COLORS[data.color as string] ?? 'var(--foreground)',
-          fontSize: (data.fontSize as string) ?? '0.875rem',
-        }}
-      >
-        {data.label as string}
+      <div className="p-1">
+        <div
+          className="leading-snug break-words overflow-hidden"
+          style={{
+            width: '100%',
+            height: '100%',
+            maxWidth: 500,
+            color: TEXT_COLORS[data.color as string] ?? 'var(--foreground)',
+            fontSize: (data.fontSize as string) ?? '0.875rem',
+          }}
+        >
+          {data.label as string}
+        </div>
       </div>
     </>
   )
