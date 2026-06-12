@@ -1,6 +1,5 @@
 export const NodeType = {
-  START: 'start',
-  END: 'end',
+  CIRCLE: 'circle',
   TASK: 'task',
   GATEWAY: 'gateway',
 } as const

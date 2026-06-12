@@ -11,8 +11,7 @@ import {
   type Node,
   type Edge,
 } from '@xyflow/react';
-import { StartNode } from './nodes/start-node';
-import { EndNode } from './nodes/end-node';
+import { CircleNode } from './nodes/circle-node';
 import { TaskNode } from './nodes/task-node';
 import { GatewayNode } from './nodes/gateway-node';
 import { TextNode } from './nodes/text-node';
@@ -22,8 +21,7 @@ import simpleFlow from '../data/simple-flow.json';
 import requestApprovalFlow from '../data/request-approval-flow.json';
 
 const nodeTypes = {
-  start: StartNode,
-  end: EndNode,
+  circle: CircleNode,
   task: TaskNode,
   gateway: GatewayNode,
   text: TextNode,

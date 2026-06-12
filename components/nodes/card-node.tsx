@@ -1,4 +1,4 @@
-import { Handle, Position, type NodeProps } from '@xyflow/react';
+import { type NodeProps } from '@xyflow/react';
 import { COLORS, TEXT_COLORS } from '@/constants/colors';
 import { BaseNode } from './base-node';
 
@@ -9,8 +9,6 @@ export function CardNode({ data, selected }: NodeProps) {
       className="w-full h-full flex flex-col overflow-hidden p-0"
       style={{ color: TEXT_COLORS[data.textColor as string] }}
     >
-      <Handle type="target" position={Position.Top} />
-
       <div
         className="shrink-0 px-3 py-1 border-b border-border/60"
         style={{ backgroundColor: COLORS[data.background as string] ?? 'var(--muted)' }}
@@ -25,8 +23,6 @@ export function CardNode({ data, selected }: NodeProps) {
           {data.content as string}
         </p>
       </div>
-
-      <Handle type="source" position={Position.Bottom} />
     </BaseNode>
   )
 }

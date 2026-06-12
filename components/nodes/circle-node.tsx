@@ -1,8 +1,8 @@
-import { Handle, Position, type NodeProps } from '@xyflow/react';
+import { type NodeProps } from '@xyflow/react';
 import { COLORS, TEXT_COLORS } from '@/constants/colors';
 import { BaseNode } from './base-node';
 
-export function StartNode({ data, selected }: NodeProps) {
+export function CircleNode({ data, selected }: NodeProps) {
   return (
     <BaseNode
       selected={selected}
@@ -16,7 +16,6 @@ export function StartNode({ data, selected }: NodeProps) {
       }}
     >
       {data.label as string}
-      <Handle type="source" position={Position.Bottom} />
     </BaseNode>
   )
 }

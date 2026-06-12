@@ -1,4 +1,4 @@
-import { NodeResizer } from '@xyflow/react';
+import { Handle, NodeResizer, Position } from '@xyflow/react';
 import { cn } from '@/lib/utils';
 
 interface BaseNodeProps {
@@ -7,9 +7,10 @@ interface BaseNodeProps {
   children: React.ReactNode;
   selected?: boolean;
   keepAspectRatio?: boolean;
+  handles?: boolean;
 }
 
-export function BaseNode({ className, style, children, selected, keepAspectRatio }: Readonly<BaseNodeProps>) {
+export function BaseNode({ className, style, children, selected, keepAspectRatio, handles = true }: Readonly<BaseNodeProps>) {
   return (
     <>
       <NodeResizer
@@ -32,6 +33,18 @@ export function BaseNode({ className, style, children, selected, keepAspectRatio
           )}
           style={style}
         >
+          {handles && (
+            <>
+              <Handle type="target" position={Position.Top}    id="top-target"    />
+              <Handle type="source" position={Position.Top}    id="top-source"    />
+              <Handle type="target" position={Position.Bottom} id="bottom-target" />
+              <Handle type="source" position={Position.Bottom} id="bottom-source" />
+              <Handle type="target" position={Position.Left}   id="left-target"   />
+              <Handle type="source" position={Position.Left}   id="left-source"   />
+              <Handle type="target" position={Position.Right}  id="right-target"  />
+              <Handle type="source" position={Position.Right}  id="right-source"  />
+            </>
+          )}
           {children}
         </div>
       </div>

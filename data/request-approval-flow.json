@@ -2,12 +2,12 @@
   "nodes": [
     {
       "id": "start",
-      "type": "start",
+      "type": "circle",
       "data": {
         "label": "Start"
       },
       "position": {
-        "x": 187.76670607419805,
+        "x": 187.76670607419803,
         "y": -51.59350632326653
       },
       "width": 81,
@@ -62,7 +62,7 @@
     },
     {
       "id": "end_no",
-      "type": "end",
+      "type": "circle",
       "data": {
         "label": "End"
       },
@@ -95,7 +95,7 @@
     },
     {
       "id": "end_yes",
-      "type": "end",
+      "type": "circle",
       "data": {
         "label": "End"
       },
@@ -135,14 +135,6 @@
   ],
   "edges": [
     {
-      "id": "e1",
-      "source": "start",
-      "target": "receive_request",
-      "markerEnd": {
-        "type": "arrowclosed"
-      }
-    },
-    {
       "id": "e2",
       "source": "receive_request",
       "target": "validate_request",
@@ -162,6 +154,7 @@
       "id": "e4",
       "source": "approved",
       "target": "request_revision",
+      "sourceHandle": "left-source",
       "type": "smoothstep",
       "label": "no",
       "animated": true,
@@ -170,38 +163,12 @@
       }
     },
     {
-      "id": "e5",
-      "source": "request_revision",
-      "target": "end_no",
-      "markerEnd": {
-        "type": "arrowclosed"
-      }
-    },
-    {
       "id": "e6",
       "source": "approved",
       "target": "process_order",
-      "sourceHandle": "yes",
+      "sourceHandle": "right-source",
       "type": "smoothstep",
       "label": "Yes",
-      "markerEnd": {
-        "type": "arrowclosed"
-      }
-    },
-    {
-      "id": "e7",
-      "source": "process_order",
-      "target": "send_confirmation",
-      "type": "smoothstep",
-      "animated": true,
-      "markerEnd": {
-        "type": "arrowclosed"
-      }
-    },
-    {
-      "id": "e8",
-      "source": "send_confirmation",
-      "target": "end_yes",
       "markerEnd": {
         "type": "arrowclosed"
       }
@@ -216,6 +183,45 @@
       "style": {
         "strokeDasharray": "6 3"
       },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__startbottom-source-receive_request",
+      "source": "start",
+      "target": "receive_request",
+      "sourceHandle": "bottom-source",
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__send_confirmationbottom-source-end_yestop-target",
+      "source": "send_confirmation",
+      "target": "end_yes",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__process_orderbottom-source-send_confirmationtop-target",
+      "source": "process_order",
+      "target": "send_confirmation",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__request_revisionbottom-source-end_notop-target",
+      "source": "request_revision",
+      "target": "end_no",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
       "markerEnd": {
         "type": "arrowclosed"
       }

@@ -1,4 +1,4 @@
-import { Handle, Position, type NodeProps } from '@xyflow/react';
+import { type NodeProps } from '@xyflow/react';
 import { COLORS, TEXT_COLORS } from '@/constants/colors';
 import { BaseNode } from './base-node';
 
@@ -13,9 +13,7 @@ export function TaskNode({ data, selected }: NodeProps) {
         minWidth: '150px',
       }}
     >
-      <Handle type="target" position={Position.Top} />
       {data.label as string}
-      <Handle type="source" position={Position.Bottom} />
     </BaseNode>
   )
 }
