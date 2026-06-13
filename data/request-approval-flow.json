@@ -38,7 +38,7 @@
     },
     {
       "id": "approved",
-      "type": "gateway",
+      "type": "diamond",
       "data": {
         "label": "Approved?",
         "background": "yellow"

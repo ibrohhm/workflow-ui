@@ -13,7 +13,7 @@ import {
 } from '@xyflow/react';
 import { CircleNode } from './nodes/circle-node';
 import { TaskNode } from './nodes/task-node';
-import { GatewayNode } from './nodes/gateway-node';
+import { DiamondNode } from './nodes/diamond-node';
 import { TextNode } from './nodes/text-node';
 import { CardNode } from './nodes/card-node';
 import { PropertiesSidebar } from './properties-sidebar';
@@ -23,7 +23,7 @@ import requestApprovalFlow from '../data/request-approval-flow.json';
 const nodeTypes = {
   circle: CircleNode,
   task: TaskNode,
-  gateway: GatewayNode,
+  diamond: DiamondNode,
   text: TextNode,
   card: CardNode,
 }

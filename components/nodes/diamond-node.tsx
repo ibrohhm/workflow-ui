@@ -2,7 +2,7 @@ import { Handle, Position, type NodeProps } from '@xyflow/react';
 import { COLORS, TEXT_COLORS } from '@/constants/colors';
 import { BaseNode } from './base-node';
 
-export function GatewayNode({ data, selected }: NodeProps) {
+export function DiamondNode({ data, selected }: NodeProps) {
   return (
     <BaseNode
       selected={selected}

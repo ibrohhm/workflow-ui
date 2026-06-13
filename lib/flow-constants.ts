@@ -1,7 +1,7 @@
 export const NodeType = {
   CIRCLE: 'circle',
   TASK: 'task',
-  GATEWAY: 'gateway',
+  DIAMOND: 'diamond',
 } as const
 
 export const EdgeType = {
