@@ -108,15 +108,15 @@
       "id": "annotation_1",
       "type": "text",
       "data": {
-        "label": "This flow describes the end-to-end request approval process from submission through validation to final order confirmation and notification.",
+        "label": "This flow describes the end-to-end request approval process from submission through validation to final order confirmation and notification.\n\nhola",
         "color": "yellow"
       },
       "position": {
         "x": 461.1293750299411,
         "y": 141.36372025999668
       },
-      "width": 240,
-      "height": 97
+      "width": 381,
+      "height": 128
     },
     {
       "id": "card_1",

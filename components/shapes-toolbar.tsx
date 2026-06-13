@@ -29,10 +29,10 @@ function ShapePreview({ type }: { type: string }) {
   if (type === 'text') {
     return (
       <div
-        className="flex items-center justify-center select-none"
-        style={{ width: 28, height: 28, fontSize: 16, fontWeight: 700, color: 'var(--border)' }}
+        className="flex items-center justify-center border border-dashed rounded select-none"
+        style={{ width: 32, height: 24, fontSize: 10, color: 'var(--border)' }}
       >
-        T
+        text
       </div>
     );
   }
@@ -40,7 +40,7 @@ function ShapePreview({ type }: { type: string }) {
     return (
       <div
         className={`${base} rounded`}
-        style={{ width: 32, height: 24, borderColor, borderTopWidth: 3, borderTopColor: T.accent }}
+        style={{ width: 32, height: 24, borderColor, borderTopWidth: 3 }}
       />
     );
   }
@@ -72,7 +72,7 @@ export function ShapesToolbar() {
           key={type}
           draggable
           onDragStart={(e) => onDragStart(e, type)}
-          className="flex items-center justify-center w-9 h-9 rounded-lg cursor-grab active:cursor-grabbing transition-colors duration-100"
+          className="flex items-center justify-center w-9 h-9 rounded-sm cursor-grab active:cursor-grabbing transition-colors duration-100"
           style={{ userSelect: 'none' }}
           onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = T.hover)}
           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
