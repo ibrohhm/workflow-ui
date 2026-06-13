@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useMemo, useState, useRef } from 'react';
+import { useCallback, useMemo, useState, useRef, useEffect } from 'react';
 import {
   Background,
   ReactFlow,
@@ -22,6 +22,7 @@ import { CardNode } from './nodes/card-node';
 import { PropertiesSidebar } from './properties-sidebar';
 import { ShapesToolbar } from './shapes-toolbar';
 import simpleFlow from '../data/simple-flow.json';
+import agentTeamFlow from '../data/agent-team-flow.json';
 import requestApprovalFlow from '../data/request-approval-flow.json';
 
 const nodeTypes = {
@@ -32,8 +33,8 @@ const nodeTypes = {
   card: CardNode,
 }
 
-const initialNodes = requestApprovalFlow.nodes as Node[]
-const initialEdges = requestApprovalFlow.edges as Edge[]
+const initialNodes = agentTeamFlow.nodes as Node[]
+const initialEdges = agentTeamFlow.edges as Edge[]
 
 export function WorkflowUI() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -100,6 +101,25 @@ export function WorkflowUI() {
     setSelectedNodeId(null);
     setSelectedEdgeId(null);
   }, []);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'd') {
+        e.preventDefault();
+        if (!selectedNode) return;
+        const newNode: Node = {
+          ...selectedNode,
+          id: `node_${Date.now()}`,
+          position: { x: selectedNode.position.x + 20, y: selectedNode.position.y + 20 },
+          selected: false,
+        };
+        setNodes(nds => [...nds, newNode]);
+        setSelectedNodeId(newNode.id);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [selectedNode, setNodes]);
 
   const rfInstance = useRef<ReactFlowInstance | null>(null);
 
