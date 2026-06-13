@@ -7,6 +7,7 @@ import {
   useNodesState,
   useEdgesState,
   addEdge,
+  reconnectEdge,
   type Connection,
   type Node,
   type Edge,
@@ -42,6 +43,12 @@ export function WorkflowUI() {
 
   const onConnect = useCallback(
     (connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
+    [setEdges],
+  );
+
+  const onReconnect = useCallback(
+    (oldEdge: Edge, newConnection: Connection) =>
+      setEdges((eds) => reconnectEdge(oldEdge, newConnection, eds)),
     [setEdges],
   );
 
@@ -118,9 +125,11 @@ export function WorkflowUI() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onReconnect={onReconnect}
         onNodeClick={onNodeClick}
         onEdgeClick={onEdgeClick}
         onPaneClick={onPaneClick}
+        defaultEdgeOptions={{ reconnectable: true }}
         fitView
         fitViewOptions={{ padding: 0.2 }}
         colorMode="system"
