@@ -14,7 +14,7 @@ export function TaskNode({ data, selected }: NodeProps) {
         minHeight: '50px',
       }}
     >
-      {data.label as string}
+      <span style={{ whiteSpace: 'pre-wrap' }}>{data.label as string}</span>
     </BaseNode>
   )
 }

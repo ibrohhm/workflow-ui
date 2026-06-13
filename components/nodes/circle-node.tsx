@@ -15,7 +15,7 @@ export function CircleNode({ data, selected }: NodeProps) {
         minHeight: '5rem',
       }}
     >
-      {data.label as string}
+      <span style={{ whiteSpace: 'pre-wrap', textAlign: 'center' }}>{data.label as string}</span>
     </BaseNode>
   )
 }

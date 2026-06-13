@@ -17,7 +17,7 @@ export function DiamondNode({ data, selected }: NodeProps) {
       }}
     >
       <span className="absolute text-xs -rotate-45 font-medium text-center px-2">
-        {data.label as string}
+        <span style={{ whiteSpace: 'pre-wrap' }}>{data.label as string}</span>
       </span>
       <Handle type="source" position={Position.Top}     id="top-source"     style={{ top: 0,      left: 0,                           transform: 'translate(-50%, -50%)' }} />
       <Handle type="target" position={Position.Top}     id="top-target"     style={{ top: 0,      left: 0,                           transform: 'translate(-50%, -50%)' }} />

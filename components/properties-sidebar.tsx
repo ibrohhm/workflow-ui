@@ -157,6 +157,46 @@ export function PropertiesSidebar({
               </div>
             </div>
             <Sep />
+
+            {selectedNode.type === 'card' ? (
+              <div className="px-3 pt-3 pb-3 flex flex-col gap-3">
+                <div>
+                  <FieldLabel>Title</FieldLabel>
+                  <input
+                    type="text"
+                    value={(selectedNode.data.title as string) ?? ''}
+                    placeholder="Card title…"
+                    onChange={e => onNodeDataChange(selectedNode.id, { title: e.target.value })}
+                    className="w-full text-[11px] px-2 py-1 rounded-md outline-none"
+                    style={{ backgroundColor: T.hover, border: `1px solid ${T.border}`, color: T.text }}
+                  />
+                </div>
+                <div>
+                  <FieldLabel>Content</FieldLabel>
+                  <textarea
+                    value={(selectedNode.data.content as string) ?? ''}
+                    placeholder="Card content…"
+                    rows={4}
+                    onChange={e => onNodeDataChange(selectedNode.id, { content: e.target.value })}
+                    className="w-full text-[11px] px-2 py-1.5 rounded-md outline-none resize-none"
+                    style={{ backgroundColor: T.hover, border: `1px solid ${T.border}`, color: T.text }}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="px-3 pt-3 pb-3">
+                <FieldLabel>Label</FieldLabel>
+                <textarea
+                  value={(selectedNode.data.label as string) ?? ''}
+                  placeholder="Node label…"
+                  rows={3}
+                  onChange={e => onNodeDataChange(selectedNode.id, { label: e.target.value })}
+                  className="w-full text-[11px] px-2 py-1.5 rounded-md outline-none resize-none"
+                  style={{ backgroundColor: T.hover, border: `1px solid ${T.border}`, color: T.text }}
+                />
+              </div>
+            )}
+            <Sep />
             {!isTextNode && (
               <>
                 <SwatchSection label="Background">

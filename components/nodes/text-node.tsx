@@ -21,6 +21,7 @@ export function TextNode({ data, selected }: NodeProps) {
             maxWidth: 500,
             color: TEXT_COLORS[data.color as string] ?? 'var(--foreground)',
             fontSize: (data.fontSize as string) ?? '0.875rem',
+            whiteSpace: 'pre-wrap',
           }}
         >
           {data.label as string}
