@@ -11,8 +11,8 @@ export function CircleNode({ data, selected }: NodeProps) {
       style={{
         backgroundColor: COLORS[data.background as string],
         color: TEXT_COLORS[data.textColor as string],
-        minWidth: '3rem',
-        minHeight: '3rem',
+        minWidth: '5rem',
+        minHeight: '5rem',
       }}
     >
       {data.label as string}

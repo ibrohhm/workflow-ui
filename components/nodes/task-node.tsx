@@ -10,7 +10,8 @@ export function TaskNode({ data, selected }: NodeProps) {
       style={{
         backgroundColor: COLORS[data.background as string],
         color: TEXT_COLORS[data.textColor as string],
-        minWidth: '150px',
+        minWidth: '180px',
+        minHeight: '50px',
       }}
     >
       {data.label as string}

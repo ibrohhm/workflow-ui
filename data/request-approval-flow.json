@@ -135,22 +135,6 @@
   ],
   "edges": [
     {
-      "id": "e2",
-      "source": "receive_request",
-      "target": "validate_request",
-      "markerEnd": {
-        "type": "arrowclosed"
-      }
-    },
-    {
-      "id": "e3",
-      "source": "validate_request",
-      "target": "approved",
-      "markerEnd": {
-        "type": "arrowclosed"
-      }
-    },
-    {
       "id": "e4",
       "source": "approved",
       "target": "request_revision",
@@ -220,6 +204,26 @@
       "id": "xy-edge__request_revisionbottom-source-end_notop-target",
       "source": "request_revision",
       "target": "end_no",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__validate_requestbottom-source-approvedtop-target",
+      "source": "validate_request",
+      "target": "approved",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__receive_requestbottom-source-validate_requesttop-target",
+      "source": "receive_request",
+      "target": "validate_request",
       "sourceHandle": "bottom-source",
       "targetHandle": "top-target",
       "markerEnd": {

@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useMemo, useState, useRef } from 'react';
 import {
   Background,
   ReactFlow,
@@ -11,6 +11,7 @@ import {
   type Connection,
   type Node,
   type Edge,
+  type EdgeMarker,
 } from '@xyflow/react';
 import { CircleNode } from './nodes/circle-node';
 import { TaskNode } from './nodes/task-node';
@@ -40,6 +41,16 @@ export function WorkflowUI() {
 
   const selectedNode = selectedNodeId ? (nodes.find(n => n.id === selectedNodeId) ?? null) : null;
   const selectedEdge = selectedEdgeId ? (edges.find(e => e.id === selectedEdgeId) ?? null) : null;
+
+  const displayEdges = useMemo(
+    () =>
+      edges.map(e => {
+        if (!e.markerEnd || typeof e.markerEnd === 'string') return e;
+        const color = e.id === selectedEdgeId ? 'oklch(0.439 0 0)' : 'oklch(0.556 0 0)';
+        return { ...e, markerEnd: { ...(e.markerEnd as EdgeMarker), color } };
+      }),
+    [edges, selectedEdgeId],
+  );
 
   const onConnect = useCallback(
     (connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
@@ -120,7 +131,7 @@ export function WorkflowUI() {
     <div className="wrapper relative">
       <ReactFlow
         nodes={nodes}
-        edges={edges}
+        edges={displayEdges}
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}

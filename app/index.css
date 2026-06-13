@@ -29,3 +29,13 @@ body {
 .react-flow__handle.connected {
   opacity: 1;
 }
+
+.react-flow__edge .react-flow__edge-path {
+  stroke: var(--chart-2);
+  stroke-width: 1.5;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: var(--chart-3);
+  stroke-width: 2;
+}

@@ -12,8 +12,8 @@ export function DiamondNode({ data, selected }: NodeProps) {
       style={{
         backgroundColor: COLORS[data.background as string],
         color: TEXT_COLORS[data.textColor as string],
-        minWidth: '4rem',
-        minHeight: '4rem',
+        minWidth: '5rem',
+        minHeight: '5rem',
       }}
     >
       <span className="absolute text-xs -rotate-45 font-medium text-center px-2">
