@@ -12,6 +12,7 @@ import {
   type Node,
   type Edge,
   type EdgeMarker,
+  type ReactFlowInstance,
 } from '@xyflow/react';
 import { CircleNode } from './nodes/circle-node';
 import { TaskNode } from './nodes/task-node';
@@ -19,6 +20,7 @@ import { DiamondNode } from './nodes/diamond-node';
 import { TextNode } from './nodes/text-node';
 import { CardNode } from './nodes/card-node';
 import { PropertiesSidebar } from './properties-sidebar';
+import { ShapesToolbar } from './shapes-toolbar';
 import simpleFlow from '../data/simple-flow.json';
 import requestApprovalFlow from '../data/request-approval-flow.json';
 
@@ -99,6 +101,35 @@ export function WorkflowUI() {
     setSelectedEdgeId(null);
   }, []);
 
+  const rfInstance = useRef<ReactFlowInstance | null>(null);
+
+  const onDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  }, []);
+
+  const onDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    const type = e.dataTransfer.getData('application/reactflow');
+    if (!type || !rfInstance.current) return;
+
+    const position = rfInstance.current.screenToFlowPosition({ x: e.clientX, y: e.clientY });
+    const defaults: Record<string, Record<string, unknown>> = {
+      circle:  { label: 'Event' },
+      task:    { label: 'Task' },
+      diamond: { label: 'Gateway', background: 'yellow' },
+      text:    { label: 'Text', color: 'yellow' },
+      card:    { title: 'Card', content: '' },
+    };
+    const newNode: Node = {
+      id: `node_${Date.now()}`,
+      type,
+      position,
+      data: defaults[type] ?? { label: type },
+    };
+    setNodes(nds => [...nds, newNode]);
+  }, [setNodes]);
+
   const [copyLabel, setCopyLabel] = useState('Copy JSON');
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -140,6 +171,9 @@ export function WorkflowUI() {
         onNodeClick={onNodeClick}
         onEdgeClick={onEdgeClick}
         onPaneClick={onPaneClick}
+        onInit={(instance) => { rfInstance.current = instance; }}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
         defaultEdgeOptions={{ reconnectable: true }}
         fitView
         fitViewOptions={{ padding: 0.2 }}
@@ -158,6 +192,7 @@ export function WorkflowUI() {
       >
         {copyLabel}
       </button>
+      <ShapesToolbar />
       <PropertiesSidebar
         selectedNode={selectedNode}
         selectedEdge={selectedEdge}

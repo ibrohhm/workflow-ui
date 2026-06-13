@@ -97,7 +97,7 @@ export function PropertiesSidebar({
           : 'opacity-0 -translate-y-1/2 -translate-x-2 pointer-events-none',
       )}
       style={{
-        backgroundColor: T.bg,
+        backgroundColor: 'var(--background)',
         boxShadow: T.shadow,
         color: T.text,
         maxHeight: '85vh',
