@@ -101,20 +101,22 @@ export function ShapesToolbar({ showGrid, onToggleGrid, flows, currentFlow, onFl
         </div>
       ))}
       <div className="w-px h-5 mx-1 rounded-full" style={{ backgroundColor: T.border }} />
-      {flows.length > 0 && (
-        <select
-          value={currentFlow ?? ''}
-          onChange={e => onFlowChange(e.target.value)}
-          className="text-[10px] font-medium px-1.5 py-1 rounded-sm outline-none cursor-pointer h-9"
-          style={{ backgroundColor: T.surface, color: T.muted, border: 'none' }}
-        >
-          <option value="" disabled>pick flowchart</option>
-          {flows.map(name => (
-            <option key={name} value={name}>{name}</option>
-          ))}
-        </select>
+      {process.env.NEXT_PUBLIC_SHOW_FLOW_SWITCHER === 'true' && flows.length > 0 && (
+        <>
+          <select
+            value={currentFlow ?? ''}
+            onChange={e => onFlowChange(e.target.value)}
+            className="text-[10px] font-medium px-1.5 py-1 rounded-sm outline-none cursor-pointer h-9"
+            style={{ backgroundColor: T.surface, color: T.muted, border: 'none' }}
+          >
+            <option value="" disabled>pick flowchart</option>
+            {flows.map(name => (
+              <option key={name} value={name}>{name}</option>
+            ))}
+          </select>
+          <div className="w-px h-5 mx-1 rounded-full" style={{ backgroundColor: T.border }} />
+        </>
       )}
-      <div className="w-px h-5 mx-1 rounded-full" style={{ backgroundColor: T.border }} />
       <button
         onClick={onToggleGrid}
         title={showGrid ? 'Hide grid' : 'Show grid'}
