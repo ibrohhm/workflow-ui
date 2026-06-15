@@ -20,14 +20,14 @@ export function DiamondNode({ data, selected }: NodeProps) {
       <span className="absolute text-xs -rotate-45 font-medium text-center px-2">
         <span style={{ whiteSpace: 'pre-wrap' }}>{data.label as string}</span>
       </span>
-      <Handle type="source" position={Position.Top}     id="top-source"     style={{ top: 0,      left: 0,                           transform: 'translate(-50%, -50%)' }} />
       <Handle type="target" position={Position.Top}     id="top-target"     style={{ top: 0,      left: 0,                           transform: 'translate(-50%, -50%)' }} />
-      <Handle type="source" position={Position.Left}    id="left-source"    style={{ top: 'auto', left: 0,                bottom: 0, transform: 'translate(-50%, 50%)' }} />
+      <Handle type="source" position={Position.Top}     id="top-source"     style={{ top: 0,      left: 0,                           transform: 'translate(-50%, -50%)' }} />
       <Handle type="target" position={Position.Left}    id="left-target"    style={{ top: 'auto', left: 0,                bottom: 0, transform: 'translate(-50%, 50%)' }} />
-      <Handle type="source" position={Position.Right}   id="right-source"   style={{ top: 0,                    right: 0,            transform: 'translate(50%, -50%)' }} />
+      <Handle type="source" position={Position.Left}    id="left-source"    style={{ top: 'auto', left: 0,                bottom: 0, transform: 'translate(-50%, 50%)' }} />
       <Handle type="target" position={Position.Right}   id="right-target"   style={{ top: 0,                    right: 0,            transform: 'translate(50%, -50%)' }} />
-      <Handle type="source" position={Position.Bottom}  id="bottom-source"  style={{              left: 'auto', right: 0, bottom: 0, transform: 'translate(50%,  50%)' }} />
+      <Handle type="source" position={Position.Right}   id="right-source"   style={{ top: 0,                    right: 0,            transform: 'translate(50%, -50%)' }} />
       <Handle type="target" position={Position.Bottom}  id="bottom-target"  style={{              left: 'auto', right: 0, bottom: 0, transform: 'translate(50%,  50%)' }} />
+      <Handle type="source" position={Position.Bottom}  id="bottom-source"  style={{              left: 'auto', right: 0, bottom: 0, transform: 'translate(50%,  50%)' }} />
     </BaseNode>
   )
 }

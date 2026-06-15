@@ -1,6 +1,31 @@
 {
   "nodes": [
     {
+      "id": "node_1781513657290",
+      "type": "text",
+      "data": {
+        "label": "Agent Team Worflow",
+        "color": "black",
+        "fontSize": "24px"
+      },
+      "position": {
+        "x": 297.4534390783456,
+        "y": 107.09518343796988
+      }
+    },
+    {
+      "id": "node_1781513692930",
+      "type": "text",
+      "data": {
+        "label": "Autonomous ship pipeline for Claude Code. Takes a Jira key or free-text task description and runs it through a five-agent pipeline — clarify, plan, implement, review, test — before handing off to human review",
+        "color": "black"
+      },
+      "position": {
+        "x": 297.0926851018657,
+        "y": 156.52600076026732
+      }
+    },
+    {
       "id": "node_1781361204634",
       "type": "card",
       "data": {
@@ -8,8 +33,8 @@
         "content": "explores codebase, writes implementation plan"
       },
       "position": {
-        "x": 53.67571035135927,
-        "y": 307.7082955530172
+        "x": 62.03576369016358,
+        "y": 318.15836222652257
       },
       "width": 175,
       "height": 96
@@ -17,33 +42,44 @@
     {
       "id": "group_review_cycle",
       "type": "container",
-      "data": { "label": "" },
-      "position": { "x": 296.23, "y": 303.64 },
-      "width": 556,
-      "height": 145,
-      "zIndex": 0
+      "data": {
+        "label": "",
+        "color": "purple"
+      },
+      "position": {
+        "x": 300.23,
+        "y": 270.64
+      },
+      "width": 550,
+      "height": 211
     },
     {
       "id": "node_1781361225241",
       "type": "card",
-      "parentId": "group_review_cycle",
       "data": {
         "title": "Implementer",
         "content": "fixes blockers from reviewer feedback"
       },
-      "position": { "x": 24, "y": 24 },
+      "position": {
+        "x": 63.20848556228083,
+        "y": 47.91585805738816
+      },
+      "parentId": "group_review_cycle",
       "width": 192,
       "height": 96
     },
     {
       "id": "node_1781361253037",
       "type": "card",
-      "parentId": "group_review_cycle",
       "data": {
         "title": "Reviewer",
         "content": "diffs branch vs base, flags Blockers and Nits"
       },
-      "position": { "x": 340, "y": 25 },
+      "position": {
+        "x": 311.8506858345263,
+        "y": 48.731659539731936
+      },
+      "parentId": "group_review_cycle",
       "width": 192,
       "height": 96
     },
@@ -55,11 +91,573 @@
         "content": "runs go vet + go test -race + golangci-lint"
       },
       "position": {
-        "x": 904.5645635143219,
-        "y": 320.52811365568505
+        "x": 904.564563514322,
+        "y": 319.4831069883345
       },
       "width": 192,
       "height": 96
+    },
+    {
+      "id": "af_planner_title",
+      "type": "text",
+      "data": {
+        "label": "Planner agent receives a task description and codebase directory, explores relevant files, and writes a detailed implementation plan in writing-plans format",
+        "color": "black",
+        "fontSize": "14px"
+      },
+      "position": {
+        "x": 88.32424514616511,
+        "y": 700.7339948631071
+      }
+    },
+    {
+      "id": "af_planner_explore",
+      "type": "card",
+      "data": {
+        "title": "Explore codebase",
+        "content": "Jira key → grep key terms + read relevant files"
+      },
+      "position": {
+        "x": 257.547410145581,
+        "y": 782.5875748300673
+      },
+      "width": 230,
+      "height": 110
+    },
+    {
+      "id": "af_planner_write",
+      "type": "card",
+      "data": {
+        "title": "Write plan",
+        "content": "Numbered tasks with files, checkbox steps, real code. TDD order: test → implement → run → commit"
+      },
+      "position": {
+        "x": 566.948983292063,
+        "y": 792.767607901386
+      },
+      "width": 230,
+      "height": 110
+    },
+    {
+      "id": "af_planner_output",
+      "type": "task",
+      "data": {
+        "label": "PLAN WRITTEN | AMBIGUOUS | FAIL",
+        "background": "yellow"
+      },
+      "position": {
+        "x": 438.24628374605294,
+        "y": 949.2406620289152
+      },
+      "width": 230,
+      "height": 50
+    },
+    {
+      "id": "af_impl_title",
+      "type": "text",
+      "data": {
+        "label": "Implementer",
+        "color": "black",
+        "fontSize": "24px"
+      },
+      "position": {
+        "x": 91.33990830805372,
+        "y": 1289.5420615949206
+      }
+    },
+    {
+      "id": "af_impl_mode",
+      "type": "card",
+      "data": {
+        "title": "Bloker Fix",
+        "content": "Fixed only the listed issues"
+      },
+      "position": {
+        "x": 478.86378360965807,
+        "y": 1579.9475788578766
+      },
+      "width": 230,
+      "height": 100
+    },
+    {
+      "id": "af_impl_tests",
+      "type": "card",
+      "data": {
+        "title": "After Each Step",
+        "content": "Run go vet + go test -race -short. Stop immediately on failure or build error."
+      },
+      "position": {
+        "x": 761.8776230787438,
+        "y": 1495.6753245155192
+      },
+      "width": 230,
+      "height": 113
+    },
+    {
+      "id": "af_impl_commit",
+      "type": "card",
+      "data": {
+        "title": "Commit",
+        "content": "Stage specific files per task with commit format: type(scope): subject"
+      },
+      "position": {
+        "x": 447.4542130277878,
+        "y": 1726.7879315916502
+      },
+      "width": 230,
+      "height": 112
+    },
+    {
+      "id": "af_impl_output",
+      "type": "task",
+      "data": {
+        "label": "DONE: N commits | FAIL: task N — reason",
+        "background": "yellow"
+      },
+      "position": {
+        "x": 137.82340291112087,
+        "y": 1703.3830021771632
+      },
+      "width": 188,
+      "height": 82
+    },
+    {
+      "id": "af_rev_diff",
+      "type": "card",
+      "data": {
+        "title": "Get diff",
+        "content": "Detect base branch; git diff the current branch with master; list changed files"
+      },
+      "position": {
+        "x": 1149.8922271095364,
+        "y": 821.0517607567563
+      },
+      "width": 230,
+      "height": 108
+    },
+    {
+      "id": "af_rev_context",
+      "type": "card",
+      "data": {
+        "title": "Read context",
+        "content": "Read each changed file + direct callers. Max 3 additional files, one level up only."
+      },
+      "position": {
+        "x": 1364.8114540874135,
+        "y": 963.8683042156409
+      },
+      "width": 231,
+      "height": 114
+    },
+    {
+      "id": "af_rev_classify",
+      "type": "card",
+      "data": {
+        "title": "Classify findings",
+        "content": "BLOCKER: correctness, security, data loss, nil deref, missing timeout, missing idempotency;\nNIT: naming, style, observability"
+      },
+      "position": {
+        "x": 1079.0782426266735,
+        "y": 993.364480168472
+      },
+      "width": 228,
+      "height": 132
+    },
+    {
+      "id": "af_rev_output",
+      "type": "task",
+      "data": {
+        "label": "Back to Implementer agent"
+      },
+      "position": {
+        "x": 1015.3962711782648,
+        "y": 1260.9986274950304
+      },
+      "width": 183,
+      "height": 68
+    },
+    {
+      "id": "af_test_detect",
+      "type": "card",
+      "data": {
+        "title": "Detect repo",
+        "content": "find .go files; no Go files → TEST_RESULT: PASS (skip)"
+      },
+      "position": {
+        "x": 2029.4735621300908,
+        "y": 756.7502652349664
+      },
+      "width": 230,
+      "height": 98
+    },
+    {
+      "id": "af_test_vet",
+      "type": "card",
+      "data": {
+        "title": "go vet ./...",
+        "content": "Stop on any error. Report all output."
+      },
+      "position": {
+        "x": 2029.4735621300904,
+        "y": 913.933588219094
+      },
+      "width": 230,
+      "height": 70
+    },
+    {
+      "id": "af_test_gotest",
+      "type": "card",
+      "data": {
+        "title": "go test  ./...",
+        "content": "Stop on failure. Report FAIL/panic/Error lines + last 40 lines."
+      },
+      "position": {
+        "x": 1761.4488401707838,
+        "y": 910.6413413441264
+      },
+      "width": 230,
+      "height": 100
+    },
+    {
+      "id": "af_test_lint",
+      "type": "card",
+      "data": {
+        "title": "golangci-lint run",
+        "content": "Only if .golangci.yml exists. Report first 30 lines on failure."
+      },
+      "position": {
+        "x": 1799.0017436008725,
+        "y": 1056.601325301914
+      },
+      "width": 230,
+      "height": 93
+    },
+    {
+      "id": "af_test_output",
+      "type": "task",
+      "data": {
+        "label": "TEST_RESULT: PASS | FAIL",
+        "background": "yellow"
+      },
+      "position": {
+        "x": 1950.1521799069783,
+        "y": 1194.762060973378
+      },
+      "width": 230,
+      "height": 50
+    },
+    {
+      "id": "node_1781519871744",
+      "type": "text",
+      "data": {
+        "label": "Planner",
+        "color": "black",
+        "fontSize": "24px"
+      },
+      "position": {
+        "x": 91.00251274556167,
+        "y": 648.5106355903313
+      }
+    },
+    {
+      "id": "node_1781519947531",
+      "type": "circle",
+      "data": {
+        "label": "INPUT: \nPlain Text or Jira Key",
+        "fontSize": "16px"
+      },
+      "position": {
+        "x": 83.15528005569749,
+        "y": 830.0671598735325
+      },
+      "width": 120,
+      "height": 120
+    },
+    {
+      "id": "node_1781520097719",
+      "type": "circle",
+      "data": {
+        "label": "END"
+      },
+      "position": {
+        "x": 261.5832721821464,
+        "y": 925.656162398264
+      }
+    },
+    {
+      "id": "node_1781525086974",
+      "type": "text",
+      "data": {
+        "label": "-- agent team workflow --",
+        "color": "black"
+      },
+      "position": {
+        "x": 483.3489953738131,
+        "y": 496.1812291142023
+      }
+    },
+    {
+      "id": "node_1781526321495",
+      "type": "task",
+      "data": {
+        "label": "Plan",
+        "fontSize": "24px"
+      },
+      "position": {
+        "x": 1488.9851777694007,
+        "y": 273.49903718005373
+      },
+      "width": 183,
+      "height": 62
+    },
+    {
+      "id": "node_1781526383564",
+      "type": "task",
+      "data": {
+        "label": "Implement",
+        "fontSize": "24px"
+      },
+      "position": {
+        "x": 1738.2691130184417,
+        "y": 271.9554529602128
+      }
+    },
+    {
+      "id": "node_1781526398962",
+      "type": "task",
+      "data": {
+        "label": "Self Review",
+        "fontSize": "24px"
+      },
+      "position": {
+        "x": 1987.6115229809632,
+        "y": 271.315950800974
+      }
+    },
+    {
+      "id": "node_1781526405905",
+      "type": "task",
+      "data": {
+        "label": "Test",
+        "fontSize": "24px"
+      },
+      "position": {
+        "x": 2244.583758573023,
+        "y": 271.7890065811756
+      }
+    },
+    {
+      "id": "node_1781526979796",
+      "type": "text",
+      "data": {
+        "label": "-- planner agent flow --",
+        "color": "black"
+      },
+      "position": {
+        "x": 398.0061475568321,
+        "y": 1048.184026349944
+      }
+    },
+    {
+      "id": "node_1781527210267",
+      "type": "text",
+      "data": {
+        "label": "Implementer agent reads an implementation plan and executes it task-by-task, committing each chunk to the current branch.",
+        "color": "black"
+      },
+      "position": {
+        "x": 93.50709343084333,
+        "y": 1340.4219831168732
+      }
+    },
+    {
+      "id": "node_1781527272454",
+      "type": "circle",
+      "data": {
+        "label": "INPUT: \nPlan path",
+        "fontSize": "16px"
+      },
+      "position": {
+        "x": 95.43590390585604,
+        "y": 1479.4146479494211
+      },
+      "width": 120,
+      "height": 120
+    },
+    {
+      "id": "node_1781527525313",
+      "type": "text",
+      "data": {
+        "label": "-- implementer agent flow --",
+        "color": "black"
+      },
+      "position": {
+        "x": 272.0235793185356,
+        "y": 1927.4732116507726
+      }
+    },
+    {
+      "id": "node_1781527653078",
+      "type": "text",
+      "data": {
+        "label": "Reviewer",
+        "color": "black",
+        "fontSize": "24px"
+      },
+      "position": {
+        "x": 976.0552188267778,
+        "y": 627.9324702730888
+      }
+    },
+    {
+      "id": "node_1781527671890",
+      "type": "text",
+      "data": {
+        "label": "Reviewer agent diffs a branch against the default base branch and emits structured Blocker/Nit findings. Blockers stop the pipeline",
+        "color": "black"
+      },
+      "position": {
+        "x": 976.7698091346612,
+        "y": 676.3817654549742
+      }
+    },
+    {
+      "id": "node_1781527772199",
+      "type": "circle",
+      "data": {
+        "label": "INPUT: \nBranch",
+        "fontSize": "16px"
+      },
+      "position": {
+        "x": 981.7930912905332,
+        "y": 801.387124643952
+      },
+      "width": 120,
+      "height": 120
+    },
+    {
+      "id": "node_1781529296975",
+      "type": "diamond",
+      "data": {
+        "label": "review result",
+        "background": "yellow"
+      },
+      "position": {
+        "x": 1278.6816988397336,
+        "y": 1182.5890166750623
+      }
+    },
+    {
+      "id": "node_1781529337785",
+      "type": "circle",
+      "data": {
+        "label": "END"
+      },
+      "position": {
+        "x": 1472.1065267962188,
+        "y": 1249.4663101367498
+      }
+    },
+    {
+      "id": "node_1781529515719",
+      "type": "text",
+      "data": {
+        "label": "-- reviewer agent flow --",
+        "color": "black"
+      },
+      "position": {
+        "x": 1247.623410255034,
+        "y": 1328.1836948032085
+      }
+    },
+    {
+      "id": "node_1781529571866",
+      "type": "text",
+      "data": {
+        "label": "Tester",
+        "color": "black",
+        "fontSize": "24px"
+      },
+      "position": {
+        "x": 1757.529963938366,
+        "y": 613.9824055905559
+      }
+    },
+    {
+      "id": "node_1781529600941",
+      "type": "text",
+      "data": {
+        "label": "Tester agent runs go vet, go test -race -short, and golangci-lint (if .golangci.yml present). Returns PASS or FAIL with compact summary.",
+        "color": "black"
+      },
+      "position": {
+        "x": 1758.9502400410968,
+        "y": 660.197766927447
+      }
+    },
+    {
+      "id": "node_1781529611985",
+      "type": "circle",
+      "data": {
+        "label": "INPUT: \nWorkdir",
+        "fontSize": "16px"
+      },
+      "position": {
+        "x": 1845.1686283164893,
+        "y": 736.7089735778478
+      },
+      "width": 120,
+      "height": 120
+    },
+    {
+      "id": "node_1781529780599",
+      "type": "text",
+      "data": {
+        "label": "-- tester agent flow --",
+        "color": "black"
+      },
+      "position": {
+        "x": 1947.1423303964768,
+        "y": 1280.0528376027132
+      }
+    },
+    {
+      "id": "node_1781529795151",
+      "type": "text",
+      "data": {
+        "label": "-- actual flow --",
+        "color": "black"
+      },
+      "position": {
+        "x": 1894.264984710076,
+        "y": 362.29211369900446
+      }
+    },
+    {
+      "id": "node_1781543293367",
+      "type": "diamond",
+      "data": {
+        "label": "Mode?",
+        "background": "yellow"
+      },
+      "position": {
+        "x": 310.60243800539746,
+        "y": 1497.161321032021
+      }
+    },
+    {
+      "id": "node_1781543341027",
+      "type": "card",
+      "data": {
+        "title": "Process",
+        "content": "Create a new branch and execute plan tasks in order"
+      },
+      "position": {
+        "x": 477.68549778278214,
+        "y": 1405.8496915449614
+      },
+      "width": 230,
+      "height": 100
     }
   ],
   "edges": [
@@ -69,6 +667,7 @@
       "target": "node_1781361225241",
       "sourceHandle": "right-source",
       "targetHandle": "left-target",
+      "type": "step",
       "animated": true,
       "style": {
         "strokeDasharray": "6 3"
@@ -83,6 +682,7 @@
       "target": "node_1781361284082",
       "sourceHandle": "right-source",
       "targetHandle": "left-target",
+      "type": "step",
       "animated": true,
       "style": {
         "strokeDasharray": "6 3"
@@ -92,12 +692,133 @@
       }
     },
     {
-      "id": "xy-edge__node_1781361225241right-source-node_1781361253037left-target",
+      "id": "xy-edge__node_1781361225241top-source-node_1781361253037top-target",
       "source": "node_1781361225241",
       "target": "node_1781361253037",
+      "sourceHandle": "top-source",
+      "targetHandle": "top-target",
+      "type": "smoothstep",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781361253037bottom-source-node_1781361225241bottom-target",
+      "source": "node_1781361253037",
+      "target": "node_1781361225241",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "bottom-target",
+      "type": "smoothstep",
+      "label": "if blocked (max 2 attempts)",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "af_e_rev_2",
+      "source": "af_rev_diff",
+      "target": "af_rev_context",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "af_e_rev_3",
+      "source": "af_rev_context",
+      "target": "af_rev_classify",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "af_e_test_2",
+      "source": "af_test_detect",
+      "target": "af_test_vet",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "af_e_test_3",
+      "source": "af_test_vet",
+      "target": "af_test_gotest",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "af_e_test_4",
+      "source": "af_test_gotest",
+      "target": "af_test_lint",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "af_e_test_5",
+      "source": "af_test_lint",
+      "target": "af_test_output",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781519947531right-source-af_planner_exploreleft-target",
+      "source": "node_1781519947531",
+      "target": "af_planner_explore",
       "sourceHandle": "right-source",
       "targetHandle": "left-target",
-      "type": "arc",
+      "type": "step",
       "animated": true,
       "style": {
         "strokeDasharray": "6 3"
@@ -108,13 +829,12 @@
       }
     },
     {
-      "id": "xy-edge__node_1781361253037left-source-node_1781361225241right-target",
-      "source": "node_1781361253037",
-      "target": "node_1781361225241",
-      "sourceHandle": "left-source",
-      "targetHandle": "right-target",
-      "type": "arc",
-      "label": "if blocked (max 2 attempts)",
+      "id": "xy-edge__af_impl_moderight-source-af_impl_testsleft-target",
+      "source": "af_impl_mode",
+      "target": "af_impl_tests",
+      "sourceHandle": "right-source",
+      "targetHandle": "left-target",
+      "type": "step",
       "animated": true,
       "style": {
         "strokeDasharray": "6 3"
@@ -122,6 +842,251 @@
       "markerEnd": {
         "type": "arrowclosed",
         "color": "oklch(0.556 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781526321495right-source-node_1781526383564left-target",
+      "source": "node_1781526321495",
+      "target": "node_1781526383564",
+      "sourceHandle": "right-source",
+      "targetHandle": "left-target",
+      "type": "default",
+      "animated": true,
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781526383564right-source-node_1781526398962left-target",
+      "source": "node_1781526383564",
+      "target": "node_1781526398962",
+      "sourceHandle": "right-source",
+      "targetHandle": "left-target",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781526398962right-source-node_1781526405905left-target",
+      "source": "node_1781526398962",
+      "target": "node_1781526405905",
+      "sourceHandle": "right-source",
+      "targetHandle": "left-target",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__af_planner_outputbottom-source-node_1781520097719right-target",
+      "source": "af_planner_output",
+      "target": "node_1781520097719",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "right-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.556 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__af_planner_explorebottom-source-af_planner_writeleft-target",
+      "source": "af_planner_explore",
+      "target": "af_planner_write",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "left-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.439 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__af_planner_writeright-source-af_planner_outputright-target",
+      "source": "af_planner_write",
+      "target": "af_planner_output",
+      "sourceHandle": "right-source",
+      "targetHandle": "right-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.439 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__af_impl_commitleft-source-af_impl_outputright-target",
+      "source": "af_impl_commit",
+      "target": "af_impl_output",
+      "sourceHandle": "left-source",
+      "targetHandle": "right-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781527772199right-source-af_rev_difftop-target",
+      "source": "node_1781527772199",
+      "target": "af_rev_diff",
+      "sourceHandle": "right-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__af_rev_classifybottom-source-node_1781529296975top-target",
+      "source": "af_rev_classify",
+      "target": "node_1781529296975",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.439 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781529337785left-source-node_1781529296975right-target",
+      "source": "node_1781529337785",
+      "target": "node_1781529296975",
+      "sourceHandle": "left-source",
+      "targetHandle": "right-target",
+      "type": "step",
+      "label": "pass",
+      "animated": false,
+      "style": {
+        "strokeDasharray": "6 3"
+      }
+    },
+    {
+      "id": "xy-edge__af_rev_outputright-source-node_1781529296975left-target",
+      "source": "af_rev_output",
+      "target": "node_1781529296975",
+      "sourceHandle": "right-source",
+      "targetHandle": "left-target",
+      "type": "step",
+      "label": "bloker",
+      "animated": false,
+      "style": {
+        "strokeDasharray": "6 3"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781529611985right-source-af_test_detectleft-target",
+      "source": "node_1781529611985",
+      "target": "af_test_detect",
+      "sourceHandle": "right-source",
+      "targetHandle": "left-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781527272454right-source-node_1781543293367left-target",
+      "source": "node_1781527272454",
+      "target": "node_1781543293367",
+      "sourceHandle": "right-source",
+      "targetHandle": "left-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__af_impl_testsbottom-source-af_impl_commitright-target",
+      "source": "af_impl_tests",
+      "target": "af_impl_commit",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "right-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.556 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781543341027left-source-node_1781543293367top-target",
+      "source": "node_1781543341027",
+      "target": "node_1781543293367",
+      "sourceHandle": "left-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "label": "normal",
+      "style": {
+        "strokeDasharray": "6 3"
+      }
+    },
+    {
+      "id": "xy-edge__af_impl_modeleft-source-node_1781543293367bottom-target",
+      "source": "af_impl_mode",
+      "target": "node_1781543293367",
+      "sourceHandle": "left-source",
+      "targetHandle": "bottom-target",
+      "type": "step",
+      "label": "blocker fix",
+      "style": {
+        "strokeDasharray": "6 3"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781543341027right-source-af_impl_testsleft-target",
+      "source": "node_1781543341027",
+      "target": "af_impl_tests",
+      "sourceHandle": "right-source",
+      "targetHandle": "left-target",
+      "type": "step",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
       }
     }
   ]

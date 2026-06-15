@@ -20,7 +20,7 @@ export function CardNode({ data, selected }: NodeProps) {
 
       <div className="flex-1 px-3 py-2 overflow-auto">
         <p className="text-xs text-card-foreground leading-snug"
-          style={{ fontSize: (data.fontSize as string) ?? undefined }}>
+          style={{ fontSize: (data.fontSize as string) ?? undefined, whiteSpace: 'pre-wrap' }}>
           {data.content as string}
         </p>
       </div>

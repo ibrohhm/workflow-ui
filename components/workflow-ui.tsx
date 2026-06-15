@@ -73,7 +73,8 @@ export function WorkflowUI() {
     [setEdges],
   );
 
-  const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
+  const onNodeClick = useCallback((e: React.MouseEvent, node: Node) => {
+    if (e.shiftKey) return;
     setSelectedNodeId(node.id);
     setSelectedEdgeId(null);
   }, []);
@@ -210,8 +211,9 @@ export function WorkflowUI() {
 
   const handleCopySchema = useCallback(() => {
     const schema = {
-      nodes: nodes.map(({ id, type, data, position, width, height, style }) => ({
+      nodes: nodes.map(({ id, type, data, position, width, height, style, parentId }) => ({
         id, type, data, position,
+        ...(parentId != null ? { parentId } : {}),
         ...(width  != null ? { width }  : style?.width  != null ? { width:  style.width  } : {}),
         ...(height != null ? { height } : style?.height != null ? { height: style.height } : {}),
       })),
@@ -252,6 +254,7 @@ export function WorkflowUI() {
         onDragOver={onDragOver}
         onDrop={onDrop}
         defaultEdgeOptions={{ reconnectable: true }}
+        selectionOnDrag
         fitView
         fitViewOptions={{ padding: 0.2 }}
         colorMode="system"
