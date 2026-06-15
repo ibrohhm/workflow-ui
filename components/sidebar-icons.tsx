@@ -36,7 +36,7 @@ export function SmoothIcon() {
   );
 }
 
-export function BidirIcon() {
+export function ArcIcon() {
   return (
     <svg width="26" height="14" viewBox="0 0 26 14" fill="none" aria-hidden>
       <path d="M2 7 C8 2 18 2 24 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

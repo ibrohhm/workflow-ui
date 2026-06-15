@@ -26,7 +26,7 @@ function getArcPath(
   ];
 }
 
-export function BidirEdge({
+export function ArcEdge({
   id,
   sourceX, sourceY,
   targetX, targetY,

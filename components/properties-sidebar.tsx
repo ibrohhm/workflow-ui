@@ -6,7 +6,7 @@ import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Switch } from '@/components/ui/switch';
 import {
-  BezierIcon, StraightIcon, StepIcon, SmoothIcon, BidirIcon,
+  BezierIcon, StraightIcon, StepIcon, SmoothIcon, ArcIcon,
   SolidIcon, DashedIcon, DottedIcon,
   ArrowNoneIcon, ArrowOpenIcon, ArrowFilledIcon, ArrowBothIcon,
 } from '@/components/sidebar-icons';
@@ -39,7 +39,7 @@ const LINE_TYPES = [
   { value: 'straight',   label: 'Straight', icon: <StraightIcon /> },
   { value: 'step',       label: 'Step',     icon: <StepIcon /> },
   { value: 'smoothstep', label: 'Smooth',   icon: <SmoothIcon /> },
-  { value: 'arc',        label: 'Arc',      icon: <BidirIcon /> },
+  { value: 'arc',        label: 'Arc',      icon: <ArcIcon /> },
 ] as const;
 
 const LINE_STYLES = [

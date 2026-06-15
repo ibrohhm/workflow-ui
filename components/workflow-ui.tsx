@@ -4,6 +4,8 @@ import { useCallback, useMemo, useState, useRef, useEffect } from 'react';
 import {
   Background,
   ReactFlow,
+  Panel,
+  useViewport,
   useNodesState,
   useEdgesState,
   addEdge,
@@ -20,12 +22,23 @@ import { DiamondNode } from './nodes/diamond-node';
 import { TextNode } from './nodes/text-node';
 import { CardNode } from './nodes/card-node';
 import { ContainerNode } from './nodes/container-node';
-import { BidirEdge } from './edges/arc-edge';
+import { ArcEdge } from './edges/arc-edge';
 import { PropertiesSidebar } from './properties-sidebar';
 import { ShapesToolbar } from './shapes-toolbar';
 import simpleFlow from '../data/simple-flow.json';
 import agentTeamFlow from '../data/agent-team-flow.json';
-import requestApprovalFlow from '../data/request-approval-flow.json';
+
+function ZoomIndicator() {
+  const { zoom } = useViewport();
+  return (
+    <Panel position="bottom-center">
+      <span className="text-[10px] font-mono select-none"
+        style={{ color: 'oklch(0.75 0.01 265)' }}>
+        - {Math.round(zoom * 100)}% -
+      </span>
+    </Panel>
+  );
+}
 
 const nodeTypes = {
   circle: CircleNode,
@@ -37,11 +50,16 @@ const nodeTypes = {
 }
 
 const edgeTypes = {
-  arc: BidirEdge,
+  arc: ArcEdge,
 }
 
-const initialNodes = agentTeamFlow.nodes as Node[]
-const initialEdges = agentTeamFlow.edges as Edge[]
+const flowMap: Record<string, { nodes: Node[]; edges: Edge[] }> = {
+  'agent-team':       agentTeamFlow       as { nodes: Node[]; edges: Edge[] },
+  'simple':           simpleFlow          as { nodes: Node[]; edges: Edge[] },
+};
+const selectedFlow = flowMap[process.env.NEXT_PUBLIC_INITIAL_FLOW ?? ''] ?? { nodes: [], edges: [] };
+const initialNodes = selectedFlow.nodes;
+const initialEdges = selectedFlow.edges;
 
 export function WorkflowUI() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -254,24 +272,29 @@ export function WorkflowUI() {
         onDragOver={onDragOver}
         onDrop={onDrop}
         defaultEdgeOptions={{ reconnectable: true }}
+        minZoom={Number(process.env.NEXT_PUBLIC_MIN_ZOOM ?? 0.3)}
+        maxZoom={Number(process.env.NEXT_PUBLIC_MAX_ZOOM ?? 1.5)}
         selectionOnDrag
         fitView
         fitViewOptions={{ padding: 0.2 }}
-        colorMode="system"
+        colorMode={(process.env.NEXT_PUBLIC_COLOR_MODE as 'system' | 'light' | 'dark') ?? 'system'}
       >
         {showGrid && <Background />}
+        <ZoomIndicator />
       </ReactFlow>
-      <button
-        onClick={handleCopySchema}
-        className="fixed bottom-4 right-4 z-20 text-[11px] font-medium px-3 py-1.5 rounded-lg transition-colors duration-150"
-        style={{
-          backgroundColor: 'oklch(0.16 0.01 265)',
-          color: 'oklch(0.97 0.003 265)',
-          boxShadow: '0 2px 8px oklch(0.15 0.02 265 / 0.2)',
-        }}
-      >
-        {copyLabel}
-      </button>
+      {process.env.NEXT_PUBLIC_SHOW_COPY_JSON === 'true' && (
+        <button
+          onClick={handleCopySchema}
+          className="fixed bottom-4 right-4 z-20 text-[11px] font-medium px-3 py-1.5 rounded-lg transition-colors duration-150"
+          style={{
+            backgroundColor: 'oklch(0.16 0.01 265)',
+            color: 'oklch(0.97 0.003 265)',
+            boxShadow: '0 2px 8px oklch(0.15 0.02 265 / 0.2)',
+          }}
+        >
+          {copyLabel}
+        </button>
+      )}
       <ShapesToolbar showGrid={showGrid} onToggleGrid={() => setShowGrid(v => !v)} />
       <PropertiesSidebar
         selectedNode={selectedNode}

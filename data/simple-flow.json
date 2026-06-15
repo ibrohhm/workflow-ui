@@ -1,11 +1,52 @@
 {
   "nodes": [
-    { "id": "start", "type": "circle", "data": { "label": "Start" }, "position": { "x": 175, "y": 0 } },
-    { "id": "process", "type": "task", "data": { "label": "Process" }, "position": { "x": 150, "y": 100 } },
-    { "id": "end", "type": "circle", "data": { "label": "End" }, "position": { "x": 175, "y": 200 } }
+    {
+      "id": "start",
+      "type": "circle",
+      "data": {
+        "label": "Start"
+      },
+      "position": {
+        "x": 200.33333333333334,
+        "y": -50.666666666666664
+      }
+    },
+    {
+      "id": "process",
+      "type": "task",
+      "data": {
+        "label": "Process"
+      },
+      "position": {
+        "x": 150,
+        "y": 100
+      }
+    },
+    {
+      "id": "end",
+      "type": "circle",
+      "data": {
+        "label": "End"
+      },
+      "position": {
+        "x": 200.33333333333334,
+        "y": 232.66666666666669
+      }
+    }
   ],
   "edges": [
-    { "id": "e1", "source": "start", "target": "process" },
-    { "id": "e2", "source": "process", "target": "end" }
+    {
+      "id": "xy-edge__processbottom-source-end",
+      "source": "process",
+      "target": "end",
+      "sourceHandle": "bottom-source"
+    },
+    {
+      "id": "xy-edge__startbottom-source-processtop-target",
+      "source": "start",
+      "target": "process",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target"
+    }
   ]
 }
