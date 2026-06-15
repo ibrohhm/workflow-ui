@@ -25,8 +25,6 @@ import { ContainerNode } from './nodes/container-node';
 import { ArcEdge } from './edges/arc-edge';
 import { PropertiesSidebar } from './properties-sidebar';
 import { ShapesToolbar } from './shapes-toolbar';
-import simpleFlow from '../data/simple-flow.json';
-import agentTeamFlow from '../data/agent-team-flow.json';
 
 function ZoomIndicator() {
   const { zoom } = useViewport();
@@ -53,19 +51,14 @@ const edgeTypes = {
   arc: ArcEdge,
 }
 
-const flowMap: Record<string, { nodes: Node[]; edges: Edge[] }> = {
-  'agent-team':       agentTeamFlow       as { nodes: Node[]; edges: Edge[] },
-  'simple':           simpleFlow          as { nodes: Node[]; edges: Edge[] },
-};
-const selectedFlow = flowMap[process.env.NEXT_PUBLIC_INITIAL_FLOW ?? ''] ?? { nodes: [], edges: [] };
-const initialNodes = selectedFlow.nodes;
-const initialEdges = selectedFlow.edges;
 
 export function WorkflowUI() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [selectedEdgeId, setSelectedEdgeId] = useState<string | null>(null);
+  const [flows, setFlows] = useState<string[]>([]);
+  const [currentFlow, setCurrentFlow] = useState<string | null>(null);
 
   const selectedNode = selectedNodeId ? (nodes.find(n => n.id === selectedNodeId) ?? null) : null;
   const selectedEdge = selectedEdgeId ? (edges.find(e => e.id === selectedEdgeId) ?? null) : null;
@@ -189,6 +182,36 @@ export function WorkflowUI() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [selectedNode, setNodes]);
 
+  const loadFlow = useCallback(async (name: string) => {
+    const res = await fetch(`/api/v1/flows/${name}`);
+    if (!res.ok) return;
+    const data = await res.json();
+    setNodes(data.nodes ?? []);
+    setEdges(data.edges ?? []);
+    setCurrentFlow(name);
+    setSelectedNodeId(null);
+    setSelectedEdgeId(null);
+  }, [setNodes, setEdges]);
+
+  useEffect(() => {
+    fetch('/api/v1/flows')
+      .then(r => r.json())
+      .then((names: string[]) => {
+        setFlows(names.filter(n => n !== 'welcome-flow'));
+        const initial = process.env.NEXT_PUBLIC_INITIAL_FLOW;
+        if (initial && names.includes(initial)) {
+          loadFlow(initial);
+        } else {
+          fetch('/api/v1/flows/welcome-flow')
+            .then(r => r.json())
+            .then(data => {
+              setNodes(data.nodes ?? []);
+              setEdges(data.edges ?? []);
+            });
+        }
+      });
+  }, [loadFlow, setNodes, setEdges]);
+
   const rfInstance = useRef<ReactFlowInstance | null>(null);
 
   const onDragOver = useCallback((e: React.DragEvent) => {
@@ -275,12 +298,13 @@ export function WorkflowUI() {
         minZoom={Number(process.env.NEXT_PUBLIC_MIN_ZOOM ?? 0.3)}
         maxZoom={Number(process.env.NEXT_PUBLIC_MAX_ZOOM ?? 1.5)}
         selectionOnDrag
+        // defaultViewport={{ x: 0, y: 0, zoom: 1 }}
         fitView
         fitViewOptions={{ padding: 0.2 }}
         colorMode={(process.env.NEXT_PUBLIC_COLOR_MODE as 'system' | 'light' | 'dark') ?? 'system'}
       >
         {showGrid && <Background />}
-        <ZoomIndicator />
+        {process.env.NEXT_PUBLIC_SHOW_ZOOM_INDICATOR === 'true' && <ZoomIndicator />}
       </ReactFlow>
       {process.env.NEXT_PUBLIC_SHOW_COPY_JSON === 'true' && (
         <button
@@ -295,7 +319,13 @@ export function WorkflowUI() {
           {copyLabel}
         </button>
       )}
-      <ShapesToolbar showGrid={showGrid} onToggleGrid={() => setShowGrid(v => !v)} />
+      <ShapesToolbar
+        showGrid={showGrid}
+        onToggleGrid={() => setShowGrid(v => !v)}
+        flows={flows}
+        currentFlow={currentFlow}
+        onFlowChange={loadFlow}
+      />
       <PropertiesSidebar
         selectedNode={selectedNode}
         selectedEdge={selectedEdge}

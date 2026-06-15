@@ -68,9 +68,12 @@ function ShapePreview({ type }: { type: string }) {
 interface ShapesToolbarProps {
   showGrid: boolean;
   onToggleGrid: () => void;
+  flows: string[];
+  currentFlow: string | null;
+  onFlowChange: (name: string) => void;
 }
 
-export function ShapesToolbar({ showGrid, onToggleGrid }: ShapesToolbarProps) {
+export function ShapesToolbar({ showGrid, onToggleGrid, flows, currentFlow, onFlowChange }: ShapesToolbarProps) {
   const onDragStart = (e: React.DragEvent, nodeType: string) => {
     e.dataTransfer.setData('application/reactflow', nodeType);
     e.dataTransfer.effectAllowed = 'move';
@@ -97,6 +100,20 @@ export function ShapesToolbar({ showGrid, onToggleGrid }: ShapesToolbarProps) {
           <ShapePreview type={type} />
         </div>
       ))}
+      <div className="w-px h-5 mx-1 rounded-full" style={{ backgroundColor: T.border }} />
+      {flows.length > 0 && (
+        <select
+          value={currentFlow ?? ''}
+          onChange={e => onFlowChange(e.target.value)}
+          className="text-[10px] font-medium px-1.5 py-1 rounded-sm outline-none cursor-pointer h-9"
+          style={{ backgroundColor: T.surface, color: T.muted, border: 'none' }}
+        >
+          <option value="" disabled>pick flowchart</option>
+          {flows.map(name => (
+            <option key={name} value={name}>{name}</option>
+          ))}
+        </select>
+      )}
       <div className="w-px h-5 mx-1 rounded-full" style={{ backgroundColor: T.border }} />
       <button
         onClick={onToggleGrid}

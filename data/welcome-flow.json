@@ -1,0 +1,25 @@
+{
+  "nodes": [
+    {
+      "id": "welcome-title",
+      "type": "text",
+      "data": {
+        "label": "Welcome to Workflow UI",
+        "color": "black",
+        "fontSize": "32px"
+      },
+      "position": { "x": 240, "y": 220 }
+    },
+    {
+      "id": "welcome-desc",
+      "type": "text",
+      "data": {
+        "label": "Drag shapes from the toolbar to start building.\nClick a node to edit its properties in the sidebar.",
+        "color": "black",
+        "fontSize": "14px"
+      },
+      "position": { "x": 240, "y": 278 }
+    }
+  ],
+  "edges": []
+}
