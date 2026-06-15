@@ -2,10 +2,8 @@
 import { NodeResizer, type NodeProps } from '@xyflow/react';
 import { CONTAINER_COLORS } from '@/constants/colors';
 
-const DEFAULT_COLOR = CONTAINER_COLORS['purple'];
-
 export function ContainerNode({ selected, data }: NodeProps) {
-  const color = CONTAINER_COLORS[data?.color as string] ?? DEFAULT_COLOR;
+  const color = CONTAINER_COLORS[data?.color as string] ?? CONTAINER_COLORS['default'];
 
   return (
     <>

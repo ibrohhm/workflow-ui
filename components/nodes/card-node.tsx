@@ -1,5 +1,5 @@
 import { type NodeProps } from '@xyflow/react';
-import { COLORS, TEXT_COLORS } from '@/constants/colors';
+import { BACKGROUND_COLORS, TEXT_COLORS } from '@/constants/colors';
 import { BaseNode } from './base-node';
 
 export function CardNode({ data, selected }: NodeProps) {
@@ -11,7 +11,7 @@ export function CardNode({ data, selected }: NodeProps) {
     >
       <div
         className="shrink-0 px-3 py-1 border-b border-border/60"
-        style={{ backgroundColor: COLORS[data.background as string] ?? 'var(--muted)' }}
+        style={{ backgroundColor: BACKGROUND_COLORS[data.background as string] ?? 'var(--muted)' }}
       >
         <span className="text-xs font-semibold leading-none tracking-tight">
           {data.title as string}

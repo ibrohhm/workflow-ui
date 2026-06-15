@@ -1,5 +1,5 @@
 import { Handle, Position, type NodeProps } from '@xyflow/react';
-import { COLORS, TEXT_COLORS } from '@/constants/colors';
+import { BACKGROUND_COLORS, TEXT_COLORS } from '@/constants/colors';
 import { BaseNode } from './base-node';
 
 export function DiamondNode({ data, selected }: NodeProps) {
@@ -10,7 +10,7 @@ export function DiamondNode({ data, selected }: NodeProps) {
       handles={false}
       className="w-full h-full relative rotate-45 flex items-center justify-center text-xs font-medium overflow-visible"
       style={{
-        backgroundColor: COLORS[data.background as string],
+        backgroundColor: BACKGROUND_COLORS[data.background as string],
         color: TEXT_COLORS[data.textColor as string],
         fontSize: (data.fontSize as string) ?? undefined,
         minWidth: '5rem',

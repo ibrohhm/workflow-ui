@@ -1,7 +1,7 @@
 "use client"
 
 import { type Node, type Edge, MarkerType } from '@xyflow/react';
-import { COLORS, TEXT_COLORS, CONTAINER_COLORS } from '@/constants/colors';
+import { BACKGROUND_COLORS, TEXT_COLORS, CONTAINER_COLORS } from '@/constants/colors';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Switch } from '@/components/ui/switch';
@@ -23,7 +23,7 @@ interface PropertiesSidebarProps {
   onClose: () => void;
 }
 
-const BG_COLOR_KEYS = Object.keys(COLORS);
+const BG_COLOR_KEYS = Object.keys(BACKGROUND_COLORS);
 const TEXT_COLOR_KEYS = Object.keys(TEXT_COLORS);
 
 const FONT_SIZES = [
@@ -208,8 +208,10 @@ export function PropertiesSidebar({
             <Sep />
             {selectedNode.type === 'container' && (
               <>
-                <SwatchSection label="Color">
-                  {Object.entries(CONTAINER_COLORS).map(([key, val]) => (
+                <SwatchSection label="Background color">
+                  <Swatch label="Default" isSelected={!(selectedNode.data?.color as string)}
+                    onClick={() => onNodeDataChange(selectedNode.id, { color: undefined })} />
+                  {Object.entries(CONTAINER_COLORS).filter(([key]) => key !== 'default').map(([key, val]) => (
                     <Swatch key={key} color={val.border.replace(' / 0.55)', ')')} label={key}
                       isSelected={(selectedNode.data?.color as string) === key}
                       onClick={() => onNodeDataChange(selectedNode.id, { color: key })} />
@@ -224,7 +226,7 @@ export function PropertiesSidebar({
                   <Swatch label="Default" isSelected={!currentBg}
                     onClick={() => onNodeDataChange(selectedNode.id, { background: undefined })} />
                   {BG_COLOR_KEYS.map(key => (
-                    <Swatch key={key} color={COLORS[key]} label={key}
+                    <Swatch key={key} color={BACKGROUND_COLORS[key]} label={key}
                       isSelected={currentBg === key}
                       onClick={() => onNodeDataChange(selectedNode.id, { background: key })} />
                   ))}
