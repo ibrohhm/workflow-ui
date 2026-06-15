@@ -12,6 +12,7 @@ export const T = {
   accentBg:   'oklch(0.95 0.045 265)',
   accentText: 'oklch(0.38 0.18 265)',
   hover:      'oklch(0.95 0.018 265)',
+  surface:    'oklch(0.97 0 265)',
   shadow:     '0 8px 32px oklch(0.15 0.02 265 / 0.1), 0 2px 8px oklch(0.15 0.02 265 / 0.07), 0 0 0 1px oklch(0.88 0.012 265)',
 } as const;
 

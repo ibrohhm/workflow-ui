@@ -29,9 +29,9 @@ const TEXT_COLOR_KEYS = Object.keys(TEXT_COLORS);
 const FONT_SIZES = [
   { label: 'XS', value: '10px' },
   { label: 'S',  value: '12px' },
-  { label: 'M',  value: '14px' },
-  { label: 'L',  value: '16px' },
-  { label: 'XL', value: '20px' },
+  { label: 'M',  value: '16px' },
+  { label: 'L',  value: '24px' },
+  { label: 'XL', value: '40px' },
 ];
 
 const LINE_TYPES = [
@@ -136,7 +136,7 @@ export function PropertiesSidebar({
             'transition-colors duration-100',
           )}
           style={{ color: T.muted }}
-          onMouseEnter={e => (e.currentTarget.style.backgroundColor = T.hover)}
+          onMouseEnter={e => (e.currentTarget.style.backgroundColor = T.surface)}
           onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
         >
           <X size={12} strokeWidth={2.5} />
@@ -177,7 +177,7 @@ export function PropertiesSidebar({
                     placeholder="Card title…"
                     onChange={e => onNodeDataChange(selectedNode.id, { title: e.target.value })}
                     className="w-full text-[11px] px-2 py-1 rounded-md outline-none"
-                    style={{ backgroundColor: T.hover, border: `1px solid ${T.border}`, color: T.text }}
+                    style={{ backgroundColor: T.surface, border: `1px solid ${T.border}`, color: T.text }}
                   />
                 </div>
                 <div>
@@ -188,7 +188,7 @@ export function PropertiesSidebar({
                     rows={4}
                     onChange={e => onNodeDataChange(selectedNode.id, { content: e.target.value })}
                     className="w-full text-[11px] px-2 py-1.5 rounded-md outline-none resize-none"
-                    style={{ backgroundColor: T.hover, border: `1px solid ${T.border}`, color: T.text }}
+                    style={{ backgroundColor: T.surface, border: `1px solid ${T.border}`, color: T.text }}
                   />
                 </div>
               </div>
@@ -201,7 +201,7 @@ export function PropertiesSidebar({
                   rows={3}
                   onChange={e => onNodeDataChange(selectedNode.id, { label: e.target.value })}
                   className="w-full text-[11px] px-2 py-1.5 rounded-md outline-none resize-none"
-                  style={{ backgroundColor: T.hover, border: `1px solid ${T.border}`, color: T.text }}
+                  style={{ backgroundColor: T.surface, border: `1px solid ${T.border}`, color: T.text }}
                 />
               </div>
             )}
@@ -247,31 +247,33 @@ export function PropertiesSidebar({
                 <Sep />
                 <div className="px-3 pt-3 pb-3">
                   <FieldLabel>Font size</FieldLabel>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 mb-2">
                     {FONT_SIZES.map(({ label, value }) => (
                       <OptionButton key={value} label={value}
                         icon={<span className="text-[9px] font-bold">{label}</span>}
                         isSelected={(selectedNode.data?.fontSize as string) === value}
                         onClick={() => onNodeDataChange(selectedNode.id, { fontSize: value })} />
                     ))}
-                    <input
-                      type="number"
-                      min={6}
-                      max={96}
-                      placeholder="px"
-                      value={
-                        (selectedNode.data?.fontSize as string)
-                          ? parseInt(selectedNode.data.fontSize as string, 10)
-                          : ''
-                      }
-                      onChange={e => {
-                        const v = e.target.value;
-                        onNodeDataChange(selectedNode.id, { fontSize: v ? `${v}px` : undefined });
-                      }}
-                      className="w-12 text-[11px] text-center px-1 py-1 rounded-md outline-none"
-                      style={{ backgroundColor: T.hover, border: `1px solid ${T.border}`, color: T.text }}
-                    />
                   </div>
+                  <input
+                    type="range"
+                    min={6}
+                    max={72}
+                    value={
+                      (selectedNode.data?.fontSize as string)
+                        ? parseInt(selectedNode.data.fontSize as string, 10)
+                        : 14
+                    }
+                    onChange={e => {
+                      onNodeDataChange(selectedNode.id, { fontSize: `${e.target.value}px` });
+                    }}
+                    className="sidebar-slider"
+                  />
+                  <span className="text-[10px] font-mono mt-1.5 block text-center" style={{ color: T.muted }}>
+                    {(selectedNode.data?.fontSize as string)
+                      ? parseInt(selectedNode.data.fontSize as string, 10)
+                      : 14}px
+                  </span>
                 </div>
               </>
             )}
@@ -303,7 +305,7 @@ export function PropertiesSidebar({
                 onChange={e => onEdgeChange(selectedEdge.id, { label: e.target.value || undefined })}
                 className="w-full text-[11px] px-2 py-1 rounded-md outline-none"
                 style={{
-                  backgroundColor: T.hover,
+                  backgroundColor: T.surface,
                   border: `1px solid ${T.border}`,
                   color: T.text,
                 }}
