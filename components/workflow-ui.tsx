@@ -19,6 +19,7 @@ import { TaskNode } from './nodes/task-node';
 import { DiamondNode } from './nodes/diamond-node';
 import { TextNode } from './nodes/text-node';
 import { CardNode } from './nodes/card-node';
+import { BidirEdge } from './edges/arc-edge';
 import { PropertiesSidebar } from './properties-sidebar';
 import { ShapesToolbar } from './shapes-toolbar';
 import simpleFlow from '../data/simple-flow.json';
@@ -31,6 +32,10 @@ const nodeTypes = {
   diamond: DiamondNode,
   text: TextNode,
   card: CardNode,
+}
+
+const edgeTypes = {
+  arc: BidirEdge,
 }
 
 const initialNodes = agentTeamFlow.nodes as Node[]
@@ -184,6 +189,7 @@ export function WorkflowUI() {
         nodes={nodes}
         edges={displayEdges}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}

@@ -36,6 +36,15 @@ export function SmoothIcon() {
   );
 }
 
+export function BidirIcon() {
+  return (
+    <svg width="26" height="14" viewBox="0 0 26 14" fill="none" aria-hidden>
+      <path d="M2 7 C8 2 18 2 24 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M2 7 C8 12 18 12 24 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function SolidIcon() {
   return (
     <svg width="26" height="8" viewBox="0 0 26 8" fill="none" aria-hidden>

@@ -1,0 +1,160 @@
+{
+  "nodes": [
+    {
+      "id": "node_1781361204634",
+      "type": "card",
+      "data": {
+        "title": "Planner",
+        "content": "explores codebase, writes implementation plan"
+      },
+      "position": {
+        "x": 53.67571035135927,
+        "y": 307.7082955530172
+      },
+      "width": 175,
+      "height": 96
+    },
+    {
+      "id": "node_1781361253037",
+      "type": "card",
+      "data": {
+        "title": "Reviewer",
+        "content": "diffs branch vs base, flags Blockers and Nits"
+      },
+      "position": {
+        "x": 636.3211015561332,
+        "y": 328.29518052778616
+      },
+      "width": 192,
+      "height": 96
+    },
+    {
+      "id": "node_1781361225241",
+      "type": "card",
+      "data": {
+        "title": "Implementer",
+        "content": "fixes blockers from reviewer feedback"
+      },
+      "position": {
+        "x": 320.2302768009967,
+        "y": 327.63738691425647
+      },
+      "width": 192,
+      "height": 96
+    },
+    {
+      "id": "node_1781361284082",
+      "type": "card",
+      "data": {
+        "title": "Tester",
+        "content": "runs go vet + go test -race + golangci-lint"
+      },
+      "position": {
+        "x": 904.5645635143219,
+        "y": 320.52811365568505
+      },
+      "width": 192,
+      "height": 96
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_planner_implementer",
+      "source": "node_1781361204634",
+      "target": "node_1781361225241",
+      "sourceHandle": "right-source",
+      "targetHandle": "left-target",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "edge_reviewer_tester",
+      "source": "node_1781361253037",
+      "target": "node_1781361284082",
+      "sourceHandle": "right-source",
+      "targetHandle": "left-target",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781361253037bottom-source-node_1781361253037bottom-target",
+      "source": "node_1781361253037",
+      "target": "node_1781361253037",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "bottom-target"
+    },
+    {
+      "id": "xy-edge__node_1781361225241right-source-node_1781361253037left-target",
+      "source": "node_1781361225241",
+      "target": "node_1781361253037",
+      "sourceHandle": "right-source",
+      "targetHandle": "left-target",
+      "type": "arc",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.439 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781361253037left-source-node_1781361225241right-target",
+      "source": "node_1781361253037",
+      "target": "node_1781361225241",
+      "sourceHandle": "left-source",
+      "targetHandle": "right-target",
+      "type": "arc",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.556 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781361225241top-source-node_1781361253037top-target",
+      "source": "node_1781361225241",
+      "target": "node_1781361253037",
+      "sourceHandle": "top-source",
+      "targetHandle": "top-target",
+      "type": "smoothstep",
+      "label": "if blocked (max 2 attempts)",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "xy-edge__node_1781361253037bottom-source-node_1781361225241bottom-target",
+      "source": "node_1781361253037",
+      "target": "node_1781361225241",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "bottom-target",
+      "type": "smoothstep",
+      "animated": true,
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    }
+  ]
+}
