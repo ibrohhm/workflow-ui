@@ -8,7 +8,10 @@
         "color": "black",
         "fontSize": "32px"
       },
-      "position": { "x": 240, "y": 220 }
+      "position": {
+        "x": 110.40518461709806,
+        "y": 317.67926370134546
+      }
     },
     {
       "id": "welcome-desc",
@@ -18,8 +21,159 @@
         "color": "black",
         "fontSize": "14px"
       },
-      "position": { "x": 240, "y": 278 }
+      "position": {
+        "x": 115.68012788964793,
+        "y": 373.0002021401947
+      }
+    },
+    {
+      "id": "w-start",
+      "type": "circle",
+      "data": {
+        "label": "START"
+      },
+      "position": {
+        "x": 601.7372184668287,
+        "y": 196.26786055778388
+      }
+    },
+    {
+      "id": "w-processing",
+      "type": "task",
+      "data": {
+        "label": "Processing"
+      },
+      "position": {
+        "x": 551.7077592362768,
+        "y": 332.71109758202954
+      }
+    },
+    {
+      "id": "w-gateway",
+      "type": "diamond",
+      "data": {
+        "label": "success?",
+        "background": "yellow"
+      },
+      "position": {
+        "x": 601.1060688196346,
+        "y": 446.4848318617432
+      }
+    },
+    {
+      "id": "w-approved",
+      "type": "task",
+      "data": {
+        "label": "Approved",
+        "background": "green"
+      },
+      "position": {
+        "x": 704.0793932495772,
+        "y": 550.8686228580018
+      }
+    },
+    {
+      "id": "w-rejected",
+      "type": "task",
+      "data": {
+        "label": "Rejected",
+        "background": "red"
+      },
+      "position": {
+        "x": 380.3263043146162,
+        "y": 539.0763723491671
+      }
+    },
+    {
+      "id": "w-end",
+      "type": "circle",
+      "data": {
+        "label": "END"
+      },
+      "position": {
+        "x": 593.696153387572,
+        "y": 620.4169340050815
+      }
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "id": "xy-edge__w-processingright-source-w-gatewaytop-target",
+      "source": "w-processing",
+      "target": "w-gateway",
+      "sourceHandle": "right-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "animated": true,
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.556 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__w-gatewayleft-source-w-rejectedtop-target",
+      "source": "w-gateway",
+      "target": "w-rejected",
+      "sourceHandle": "left-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "label": "no",
+      "style": {
+        "strokeDasharray": "6 3"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.556 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__w-gatewayright-source-w-approvedtop-target",
+      "source": "w-gateway",
+      "target": "w-approved",
+      "sourceHandle": "right-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "label": "yes",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.556 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__w-rejectedbottom-source-w-endleft-target",
+      "source": "w-rejected",
+      "target": "w-end",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "left-target",
+      "type": "step",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.439 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__w-approvedbottom-source-w-endright-target",
+      "source": "w-approved",
+      "target": "w-end",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "right-target",
+      "type": "step",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.439 0 0)"
+      }
+    },
+    {
+      "id": "xy-edge__w-startbottom-source-w-processingtop-target",
+      "source": "w-start",
+      "target": "w-processing",
+      "sourceHandle": "bottom-source",
+      "targetHandle": "top-target",
+      "type": "step",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "oklch(0.556 0 0)"
+      }
+    }
+  ]
 }
