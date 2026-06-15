@@ -19,6 +19,7 @@ import { TaskNode } from './nodes/task-node';
 import { DiamondNode } from './nodes/diamond-node';
 import { TextNode } from './nodes/text-node';
 import { CardNode } from './nodes/card-node';
+import { ContainerNode } from './nodes/container-node';
 import { BidirEdge } from './edges/arc-edge';
 import { PropertiesSidebar } from './properties-sidebar';
 import { ShapesToolbar } from './shapes-toolbar';
@@ -32,6 +33,7 @@ const nodeTypes = {
   diamond: DiamondNode,
   text: TextNode,
   card: CardNode,
+  container: ContainerNode,
 }
 
 const edgeTypes = {
@@ -144,13 +146,18 @@ export function WorkflowUI() {
       task:    { label: 'Task' },
       diamond: { label: 'Gateway', background: 'yellow' },
       text:    { label: 'Text', color: 'yellow' },
-      card:    { title: 'Card', content: '' },
+      card:      { title: 'Card', content: '' },
+      container: { label: '', color: 'purple' },
+    };
+    const sizes: Record<string, { width: number; height: number }> = {
+      container: { width: 320, height: 200 },
     };
     const newNode: Node = {
       id: `node_${Date.now()}`,
       type,
       position,
       data: defaults[type] ?? { label: type },
+      ...sizes[type],
     };
     setNodes(nds => [...nds, newNode]);
   }, [setNodes]);

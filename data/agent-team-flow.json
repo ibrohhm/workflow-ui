@@ -15,30 +15,35 @@
       "height": 96
     },
     {
-      "id": "node_1781361253037",
-      "type": "card",
-      "data": {
-        "title": "Reviewer",
-        "content": "diffs branch vs base, flags Blockers and Nits"
-      },
-      "position": {
-        "x": 636.3211015561332,
-        "y": 328.29518052778616
-      },
-      "width": 192,
-      "height": 96
+      "id": "group_review_cycle",
+      "type": "container",
+      "data": { "label": "" },
+      "position": { "x": 296.23, "y": 303.64 },
+      "width": 556,
+      "height": 145,
+      "zIndex": 0
     },
     {
       "id": "node_1781361225241",
       "type": "card",
+      "parentId": "group_review_cycle",
       "data": {
         "title": "Implementer",
         "content": "fixes blockers from reviewer feedback"
       },
-      "position": {
-        "x": 320.2302768009967,
-        "y": 327.63738691425647
+      "position": { "x": 24, "y": 24 },
+      "width": 192,
+      "height": 96
+    },
+    {
+      "id": "node_1781361253037",
+      "type": "card",
+      "parentId": "group_review_cycle",
+      "data": {
+        "title": "Reviewer",
+        "content": "diffs branch vs base, flags Blockers and Nits"
       },
+      "position": { "x": 340, "y": 25 },
       "width": 192,
       "height": 96
     },
@@ -87,13 +92,6 @@
       }
     },
     {
-      "id": "xy-edge__node_1781361253037bottom-source-node_1781361253037bottom-target",
-      "source": "node_1781361253037",
-      "target": "node_1781361253037",
-      "sourceHandle": "bottom-source",
-      "targetHandle": "bottom-target"
-    },
-    {
       "id": "xy-edge__node_1781361225241right-source-node_1781361253037left-target",
       "source": "node_1781361225241",
       "target": "node_1781361253037",
@@ -116,6 +114,7 @@
       "sourceHandle": "left-source",
       "targetHandle": "right-target",
       "type": "arc",
+      "label": "if blocked (max 2 attempts)",
       "animated": true,
       "style": {
         "strokeDasharray": "6 3"
@@ -123,37 +122,6 @@
       "markerEnd": {
         "type": "arrowclosed",
         "color": "oklch(0.556 0 0)"
-      }
-    },
-    {
-      "id": "xy-edge__node_1781361225241top-source-node_1781361253037top-target",
-      "source": "node_1781361225241",
-      "target": "node_1781361253037",
-      "sourceHandle": "top-source",
-      "targetHandle": "top-target",
-      "type": "smoothstep",
-      "label": "if blocked (max 2 attempts)",
-      "animated": true,
-      "style": {
-        "strokeDasharray": "6 3"
-      },
-      "markerEnd": {
-        "type": "arrowclosed"
-      }
-    },
-    {
-      "id": "xy-edge__node_1781361253037bottom-source-node_1781361225241bottom-target",
-      "source": "node_1781361253037",
-      "target": "node_1781361225241",
-      "sourceHandle": "bottom-source",
-      "targetHandle": "bottom-target",
-      "type": "smoothstep",
-      "animated": true,
-      "style": {
-        "strokeDasharray": "6 3"
-      },
-      "markerEnd": {
-        "type": "arrowclosed"
       }
     }
   ]

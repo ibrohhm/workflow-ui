@@ -1,7 +1,7 @@
 "use client"
 
 import { type Node, type Edge, MarkerType } from '@xyflow/react';
-import { COLORS, TEXT_COLORS } from '@/constants/colors';
+import { COLORS, TEXT_COLORS, CONTAINER_COLORS } from '@/constants/colors';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Switch } from '@/components/ui/switch';
@@ -198,7 +198,19 @@ export function PropertiesSidebar({
               </div>
             )}
             <Sep />
-            {!isTextNode && (
+            {selectedNode.type === 'container' && (
+              <>
+                <SwatchSection label="Color">
+                  {Object.entries(CONTAINER_COLORS).map(([key, val]) => (
+                    <Swatch key={key} color={val.border.replace(' / 0.55)', ')')} label={key}
+                      isSelected={(selectedNode.data?.color as string) === key}
+                      onClick={() => onNodeDataChange(selectedNode.id, { color: key })} />
+                  ))}
+                </SwatchSection>
+                <Sep />
+              </>
+            )}
+            {!isTextNode && selectedNode.type !== 'container' && (
               <>
                 <SwatchSection label="Background">
                   <Swatch label="Default" isSelected={!currentBg}
@@ -213,15 +225,17 @@ export function PropertiesSidebar({
               </>
             )}
 
-            <SwatchSection label="Text color">
-              <Swatch label="Default" isSelected={!currentTextKey}
-                onClick={() => handleTextColorChange(undefined)} />
-              {TEXT_COLOR_KEYS.map(key => (
-                <Swatch key={key} color={TEXT_COLORS[key]} label={key}
-                  isSelected={currentTextKey === key}
-                  onClick={() => handleTextColorChange(key)} />
-              ))}
-            </SwatchSection>
+            {selectedNode.type !== 'container' && (
+              <SwatchSection label="Text color">
+                <Swatch label="Default" isSelected={!currentTextKey}
+                  onClick={() => handleTextColorChange(undefined)} />
+                {TEXT_COLOR_KEYS.map(key => (
+                  <Swatch key={key} color={TEXT_COLORS[key]} label={key}
+                    isSelected={currentTextKey === key}
+                    onClick={() => handleTextColorChange(key)} />
+                ))}
+              </SwatchSection>
+            )}
           </>
         )}
 

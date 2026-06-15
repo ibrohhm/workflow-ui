@@ -2,7 +2,7 @@
 
 import { T } from './sidebar-components';
 
-const SHAPES = ['circle', 'task', 'diamond', 'text', 'card'] as const;
+const SHAPES = ['circle', 'task', 'diamond', 'text', 'card', 'container'] as const;
 
 function ShapePreview({ type }: { type: string }) {
   const base = 'border select-none';
@@ -41,6 +41,18 @@ function ShapePreview({ type }: { type: string }) {
       <div
         className={`${base} rounded`}
         style={{ width: 32, height: 24, borderColor, borderTopWidth: 3 }}
+      />
+    );
+  }
+  if (type === 'container') {
+    return (
+      <div
+        className="rounded-lg border border-dashed select-none"
+        style={{
+          width: 34, height: 26,
+          borderColor: 'oklch(0.78 0.12 310 / 0.7)',
+          background: 'oklch(0.9 0.06 300 / 0.35)',
+        }}
       />
     );
   }
