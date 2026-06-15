@@ -25,6 +25,7 @@ import { ContainerNode } from './nodes/container-node';
 import { ArcEdge } from './edges/arc-edge';
 import { PropertiesSidebar } from './properties-sidebar';
 import { ShapesToolbar } from './shapes-toolbar';
+import { saveCanvas, loadCanvas, serializeCanvas } from '@/lib/canvas-storage';
 
 function ZoomIndicator() {
   const { zoom } = useViewport();
@@ -193,6 +194,15 @@ export function WorkflowUI() {
     setSelectedEdgeId(null);
   }, [setNodes, setEdges]);
 
+  const loadWelcome = useCallback(() => {
+    fetch('/api/v1/flows/welcome-flow')
+      .then(r => r.json())
+      .then(data => {
+        setNodes(data.nodes ?? []);
+        setEdges(data.edges ?? []);
+      });
+  }, [setNodes, setEdges]);
+
   useEffect(() => {
     fetch('/api/v1/flows')
       .then(r => r.json())
@@ -201,16 +211,28 @@ export function WorkflowUI() {
         const initial = process.env.NEXT_PUBLIC_INITIAL_FLOW;
         if (initial && names.includes(initial)) {
           loadFlow(initial);
+        } else if (process.env.NEXT_PUBLIC_AUTOSAVE === 'true') {
+          const saved = loadCanvas();
+          if (saved) {
+            setNodes(saved.nodes);
+            setEdges(saved.edges);
+          } else {
+            loadWelcome();
+          }
         } else {
-          fetch('/api/v1/flows/welcome-flow')
-            .then(r => r.json())
-            .then(data => {
-              setNodes(data.nodes ?? []);
-              setEdges(data.edges ?? []);
-            });
+          loadWelcome();
         }
       });
-  }, [loadFlow, setNodes, setEdges]);
+  }, [loadFlow, loadWelcome, setNodes, setEdges]);
+
+  const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_AUTOSAVE !== 'true') return;
+    if (autosaveTimer.current) clearTimeout(autosaveTimer.current);
+    autosaveTimer.current = setTimeout(() => saveCanvas(nodes, edges), 600);
+    return () => { if (autosaveTimer.current) clearTimeout(autosaveTimer.current); };
+  }, [nodes, edges]);
 
   const rfInstance = useRef<ReactFlowInstance | null>(null);
 
@@ -251,26 +273,7 @@ export function WorkflowUI() {
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleCopySchema = useCallback(() => {
-    const schema = {
-      nodes: nodes.map(({ id, type, data, position, width, height, style, parentId }) => ({
-        id, type, data, position,
-        ...(parentId != null ? { parentId } : {}),
-        ...(width  != null ? { width }  : style?.width  != null ? { width:  style.width  } : {}),
-        ...(height != null ? { height } : style?.height != null ? { height: style.height } : {}),
-      })),
-      edges: edges.map(({ id, source, target, sourceHandle, targetHandle, type, label, animated, style, markerEnd, markerStart }) => ({
-        id, source, target,
-        ...(sourceHandle != null ? { sourceHandle } : {}),
-        ...(targetHandle != null ? { targetHandle } : {}),
-        ...(type        != null ? { type }        : {}),
-        ...(label       != null ? { label }       : {}),
-        ...(animated    != null ? { animated }    : {}),
-        ...(style       != null ? { style }       : {}),
-        ...(markerEnd   != null ? { markerEnd }   : {}),
-        ...(markerStart != null ? { markerStart } : {}),
-      })),
-    };
-    navigator.clipboard.writeText(JSON.stringify(schema, null, 2));
+    navigator.clipboard.writeText(JSON.stringify(serializeCanvas(nodes, edges), null, 2));
     setCopyLabel('Copied!');
     if (copyTimer.current) clearTimeout(copyTimer.current);
     copyTimer.current = setTimeout(() => setCopyLabel('Copy JSON'), 2000);
