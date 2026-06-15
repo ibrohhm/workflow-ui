@@ -26,6 +26,14 @@ interface PropertiesSidebarProps {
 const BG_COLOR_KEYS = Object.keys(COLORS);
 const TEXT_COLOR_KEYS = Object.keys(TEXT_COLORS);
 
+const FONT_SIZES = [
+  { label: 'XS', value: '10px' },
+  { label: 'S',  value: '12px' },
+  { label: 'M',  value: '14px' },
+  { label: 'L',  value: '16px' },
+  { label: 'XL', value: '20px' },
+];
+
 const LINE_TYPES = [
   { value: 'default',    label: 'Bezier',   icon: <BezierIcon /> },
   { value: 'straight',   label: 'Straight', icon: <StraightIcon /> },
@@ -226,15 +234,46 @@ export function PropertiesSidebar({
             )}
 
             {selectedNode.type !== 'container' && (
-              <SwatchSection label="Text color">
-                <Swatch label="Default" isSelected={!currentTextKey}
-                  onClick={() => handleTextColorChange(undefined)} />
-                {TEXT_COLOR_KEYS.map(key => (
-                  <Swatch key={key} color={TEXT_COLORS[key]} label={key}
-                    isSelected={currentTextKey === key}
-                    onClick={() => handleTextColorChange(key)} />
-                ))}
-              </SwatchSection>
+              <>
+                <SwatchSection label="Text color">
+                  <Swatch label="Default" isSelected={!currentTextKey}
+                    onClick={() => handleTextColorChange(undefined)} />
+                  {TEXT_COLOR_KEYS.map(key => (
+                    <Swatch key={key} color={TEXT_COLORS[key]} label={key}
+                      isSelected={currentTextKey === key}
+                      onClick={() => handleTextColorChange(key)} />
+                  ))}
+                </SwatchSection>
+                <Sep />
+                <div className="px-3 pt-3 pb-3">
+                  <FieldLabel>Font size</FieldLabel>
+                  <div className="flex items-center gap-1.5">
+                    {FONT_SIZES.map(({ label, value }) => (
+                      <OptionButton key={value} label={value}
+                        icon={<span className="text-[9px] font-bold">{label}</span>}
+                        isSelected={(selectedNode.data?.fontSize as string) === value}
+                        onClick={() => onNodeDataChange(selectedNode.id, { fontSize: value })} />
+                    ))}
+                    <input
+                      type="number"
+                      min={6}
+                      max={96}
+                      placeholder="px"
+                      value={
+                        (selectedNode.data?.fontSize as string)
+                          ? parseInt(selectedNode.data.fontSize as string, 10)
+                          : ''
+                      }
+                      onChange={e => {
+                        const v = e.target.value;
+                        onNodeDataChange(selectedNode.id, { fontSize: v ? `${v}px` : undefined });
+                      }}
+                      className="w-12 text-[11px] text-center px-1 py-1 rounded-md outline-none"
+                      style={{ backgroundColor: T.hover, border: `1px solid ${T.border}`, color: T.text }}
+                    />
+                  </div>
+                </div>
+              </>
             )}
           </>
         )}
