@@ -205,6 +205,7 @@ export function WorkflowUI() {
   }, [setNodes]);
 
   const [copyLabel, setCopyLabel] = useState('Copy JSON');
+  const [showGrid, setShowGrid] = useState(true);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleCopySchema = useCallback(() => {
@@ -255,7 +256,7 @@ export function WorkflowUI() {
         fitViewOptions={{ padding: 0.2 }}
         colorMode="system"
       >
-        <Background />
+        {showGrid && <Background />}
       </ReactFlow>
       <button
         onClick={handleCopySchema}
@@ -268,7 +269,7 @@ export function WorkflowUI() {
       >
         {copyLabel}
       </button>
-      <ShapesToolbar />
+      <ShapesToolbar showGrid={showGrid} onToggleGrid={() => setShowGrid(v => !v)} />
       <PropertiesSidebar
         selectedNode={selectedNode}
         selectedEdge={selectedEdge}

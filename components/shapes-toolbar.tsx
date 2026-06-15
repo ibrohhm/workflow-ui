@@ -65,7 +65,12 @@ function ShapePreview({ type }: { type: string }) {
   );
 }
 
-export function ShapesToolbar() {
+interface ShapesToolbarProps {
+  showGrid: boolean;
+  onToggleGrid: () => void;
+}
+
+export function ShapesToolbar({ showGrid, onToggleGrid }: ShapesToolbarProps) {
   const onDragStart = (e: React.DragEvent, nodeType: string) => {
     e.dataTransfer.setData('application/reactflow', nodeType);
     e.dataTransfer.effectAllowed = 'move';
@@ -92,6 +97,19 @@ export function ShapesToolbar() {
           <ShapePreview type={type} />
         </div>
       ))}
+      <div className="w-px h-5 mx-1 rounded-full" style={{ backgroundColor: T.border }} />
+      <button
+        onClick={onToggleGrid}
+        title={showGrid ? 'Hide grid' : 'Show grid'}
+        className="flex items-center justify-center w-9 h-9 rounded-sm transition-colors duration-100"
+        style={{ backgroundColor: showGrid ? T.accentBg : 'transparent', color: showGrid ? T.accentText : T.muted }}
+        onMouseEnter={(e) => { if (!showGrid) e.currentTarget.style.backgroundColor = T.hover; }}
+        onMouseLeave={(e) => { if (!showGrid) e.currentTarget.style.backgroundColor = 'transparent'; }}
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2">
+          <path d="M1 5h14M1 11h14M5 1v14M11 1v14" />
+        </svg>
+      </button>
     </div>
   );
 }
