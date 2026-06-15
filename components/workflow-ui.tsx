@@ -104,6 +104,48 @@ export function WorkflowUI() {
     [setEdges],
   );
 
+  const onNodeDragStop = useCallback((_: unknown, draggedNode: Node) => {
+    if (draggedNode.type === 'container') return;
+
+    setNodes(nds => {
+      const fresh = nds.find(n => n.id === draggedNode.id);
+      if (!fresh) return nds;
+
+      const currentParent = fresh.parentId ? nds.find(n => n.id === fresh.parentId) : null;
+      const absX = fresh.position.x + (currentParent?.position.x ?? 0);
+      const absY = fresh.position.y + (currentParent?.position.y ?? 0);
+
+      const nw = (fresh.measured?.width  ?? fresh.width  as number ?? 100);
+      const nh = (fresh.measured?.height ?? fresh.height as number ?? 50);
+      const cx = absX + nw / 2;
+      const cy = absY + nh / 2;
+
+      const target = nds.find(n => {
+        if (n.type !== 'container') return false;
+        const cw = n.measured?.width  ?? n.width  as number ?? 0;
+        const ch = n.measured?.height ?? n.height as number ?? 0;
+        return cx >= n.position.x && cx <= n.position.x + cw
+            && cy >= n.position.y && cy <= n.position.y + ch;
+      });
+
+      const newParentId = target?.id;
+      if (newParentId === fresh.parentId) return nds;
+
+      const newPos = target
+        ? { x: absX - target.position.x, y: absY - target.position.y }
+        : { x: absX, y: absY };
+
+      const updated: Node = { ...fresh, position: newPos, parentId: newParentId };
+      const rest = nds.filter(n => n.id !== fresh.id);
+
+      if (newParentId) {
+        const idx = rest.findIndex(n => n.id === newParentId);
+        return [...rest.slice(0, idx + 1), updated, ...rest.slice(idx + 1)];
+      }
+      return [...rest, { ...updated, parentId: undefined }];
+    });
+  }, [setNodes]);
+
   const handleSidebarClose = useCallback(() => {
     setSelectedNodeId(null);
     setSelectedEdgeId(null);
@@ -204,6 +246,7 @@ export function WorkflowUI() {
         onNodeClick={onNodeClick}
         onEdgeClick={onEdgeClick}
         onPaneClick={onPaneClick}
+        onNodeDragStop={onNodeDragStop}
         onInit={(instance) => { rfInstance.current = instance; }}
         onDragOver={onDragOver}
         onDrop={onDrop}
